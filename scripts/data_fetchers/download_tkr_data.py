@@ -83,6 +83,14 @@ def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
 
 def main(clist_pofix, quandl_key, overwrite):
 
+    #TODO: FIND CLEANER WAY OF DOING THIS
+    if not os.path.exists(LOGS_DIR):
+        os.makedirs(LOGS_DIR)
+
+    #TODO: FIND CLEANER WAY OF DOING THIS
+    if not os.path.exists(CDATA_DIR):
+        os.makedirs(CDATA_DIR)
+
     for mkt in ["nasdaq", "nyse"]:
         clist = "{}_{}".format(mkt, clist_pofix)
         tkrs = get_tkrs_from_clist(clist)
@@ -90,6 +98,10 @@ def main(clist_pofix, quandl_key, overwrite):
         logpath = LOGS_DIR + "/download_company_data_log_{}".format(clist)
         if os.path.exists(logpath):
             os.remove(logpath)
+            
+        #TODO: FIND CLEANER WAY OF DOING THIS
+        if not os.path.exists(CDATA_DIR + '/{}/'.format(mkt)):
+            os.makedirs(CDATA_DIR + '/{}/'.format(mkt))
 
         if tkrs:
             print("\nDownloading data for {}...".format(mkt))
