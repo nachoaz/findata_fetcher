@@ -2,20 +2,17 @@
 
 import os
 
-import numpy as np
 import pandas as pd
 
-from utils.general_utils import get_qrtr_from_date, \
-                                LOGS_DIR, CDATA_DIR
+from utils.general_utils import get_qrtr_from_date
 
 
 def get_excel_file_df(tkr, mkt, tkrdir, piece):
     "reads excel file corresponding to 'piece', returns as pandas df"
     df = pd.read_excel(tkrdir + '/srow_data/{}_{}.xlsx'.format(tkr, piece))
-    df.columns = list(map(get_qrtr_from_date, 
-                      list(map(lambda x: str(x).split(' ')[0], df.columns))))
-    df.index = map(lambda x: piece[0] + "_" +  x.replace(" ", "_"), df.index)
-    df.fillna("NA")
+    df.columns = [get_qrtr_from_date(str(c).split(" ")[0]) for c in df.columns]
+    df.index = map(lambda x: piece[0] + "_" + x.replace(" ", "_"), df.index)
+    df.fillna("mSR")  # if missing because absent in srow .xlsx, marked as mSR
 
     return df.loc[:, reversed(df.columns)]
 
@@ -23,10 +20,10 @@ def get_excel_file_df(tkr, mkt, tkrdir, piece):
 def get_excel_files_df(tkr, mkt, tkrdir):
     "returns pandas df made up of excel files stacked, each with a prefix"
     piece_to_df = dict()
-    
+
     for piece in ['income', 'balance', 'cashflow', 'metrics', 'growth']:
         piece_to_df[piece] = get_excel_file_df(tkr, mkt, tkrdir, piece)
-        
+
     return pd.concat(piece_to_df.values())
 
 
@@ -37,7 +34,7 @@ def get_price_change_pcts_df(tkr, mkt, tkrdir):
     pct_df = pct_df.transpose()
     new_header = pct_df.iloc[0]
     pct_df = pct_df[1:]
-    pct_df = pct_df.rename(columns = new_header)
+    pct_df = pct_df.rename(columns=new_header)
     pct_df.columns = map(get_qrtr_from_date, pct_df.columns)
 
     return pct_df
@@ -61,7 +58,7 @@ def write_tkr_datafile_csv(tkr, mkt, tkrdir, logpath, overwrite):
             tkr_df = get_tkr_df(tkr, mkt, tkrdir)
             tkr_df.to_csv(dfile_path, index=True)
             print(stat_pre + ': SUCCESSFUL')
-        
+
         except:
             print(stat_pre + ': FAILED')
             with open(logpath, 'a') as g:
