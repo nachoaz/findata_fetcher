@@ -9,8 +9,7 @@ sys.path.append('../')
 from utils.general_utils import get_tkrs_from_clist, \
                                 LOGS_DIR, CDATA_DIR
 
-from utils.p_ch_pcts_utils import write_adj_cps_csv, \
-                                  write_tkr_p_ch_pcts_csv
+from utils.p_ch_pcts_utils import write_adj_cps_and_p_ch_pcts_csvs
 
 from utils.raw_datafiles_utils import write_tkr_datafile_csv
 
@@ -38,8 +37,7 @@ def main(clist_pofix, overwrite):
             if not os.path.exists(cp_datadir):
                 os.mkdir(cp_datadir)
 
-            write_adj_cps_csv(tkr, mkt, tkrdir, logpath, overwrite)
-            write_tkr_p_ch_pcts_csv(tkr, mkt, tkrdir, logpath, overwrite)
+            write_adj_cps_and_p_ch_pcts_csvs(tkr, tkrdir, logpath, overwrite)
             write_tkr_datafile_csv(tkr, mkt, tkrdir, logpath, overwrite)
 
 
