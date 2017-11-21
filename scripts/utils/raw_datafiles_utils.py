@@ -4,8 +4,6 @@ import os
 
 import pandas as pd
 
-from utils.general_utils import get_qrtr_from_date
-
 
 def get_excel_file_df(tkr, mkt, tkrdir, piece):
     "reads excel file corresponding to 'piece', returns as pandas df"
