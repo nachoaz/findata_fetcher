@@ -10,14 +10,13 @@ from utils.general_utils import get_qrtr_from_date
 def get_excel_file_df(tkr, mkt, tkrdir, piece):
     "reads excel file corresponding to 'piece', returns as pandas df"
     df = pd.read_excel(tkrdir + '/srow_data/{}_{}.xlsx'.format(tkr, piece))
-    df.columns = [get_qrtr_from_date(str(c).split(" ")[0]) for c in df.columns]
+    df.columns = df.columns.to_period('M').to_timestamp('M')
     df.index = map(lambda x: piece[0] + "_" + x.replace(" ", "_"), df.index)
-    df.fillna("mSR")  # if missing because absent in srow .xlsx, marked as mSR
+    df.fillna("mSR", inplace=True)  # if missing bc absent in .xlsx mark as mSR
+    return df
 
-    return df.loc[:, reversed(df.columns)]
 
-
-def get_excel_files_df(tkr, mkt, tkrdir):
+def get_excel_df(tkr, mkt, tkrdir):
     "returns pandas df made up of excel files stacked, each with a prefix"
     piece_to_df = dict()
 
@@ -27,24 +26,30 @@ def get_excel_files_df(tkr, mkt, tkrdir):
     return pd.concat(piece_to_df.values())
 
 
-def get_price_change_pcts_df(tkr, mkt, tkrdir):
+def get_p_ch_pcts_df(tkr, mkt, tkrdir):
     "returns contents of _p_ch_pcts.csv with months as columns"
     p_ch_path = os.path.join(tkrdir, "cp_data/{}_p_ch_pcts.csv".format(tkr))
     pct_df = pd.read_csv(p_ch_path)
     pct_df = pct_df.transpose()
-    new_header = pct_df.iloc[0]
-    pct_df = pct_df[1:]
-    pct_df = pct_df.rename(columns=new_header)
-    pct_df.columns = map(get_qrtr_from_date, pct_df.columns)
+    pct_df.columns = pd.to_datetime(pct_df.loc['date'])
+    pct_df.columns = pct_df.columns.to_period('M').to_timestamp('M')
+    pct_df = pct_df.drop(['date'])
+
+    # shift columns to have pct changes be momentum leading up to start of month
+    pct_df.columns = pct_df.columns.shift(1) #  mom. at month start
+    pct_df.index = ['price', 'mom1m', 'mom3m', 'mom6m', 'mom9m']
 
     return pct_df
 
 
 def get_tkr_df(tkr, mkt, tkrdir):
     "builds tkr df by concatenating excel data with _p_ch_pcts.csv data"
-    excel_files_df = get_excel_files_df(tkr, mkt, tkrdir)
-    price_change_pcts_df = get_price_change_pcts_df(tkr, mkt, tkrdir)
-    tkr_df = pd.concat([excel_files_df, price_change_pcts_df], join="inner")
+    excel_df = get_excel_df(tkr, mkt, tkrdir)
+    p_ch_pcts_df = get_p_ch_pcts_df(tkr, mkt, tkrdir)
+    tkr_df = pd.concat([excel_df, p_ch_pcts_df]).loc[:, excel_df.columns[-1]:]
+    tkr_df = tkr_df.fillna(method='ffill', axis=1)
+    tkr_df.columns = tkr_df.columns.strftime('%Y%m')
+    tkr_df.drop('price', inplace=True)
     return tkr_df
 
 

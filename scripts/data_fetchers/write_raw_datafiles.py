@@ -6,11 +6,8 @@ import argparse
 import sys
 sys.path.append('../')
 
-from utils.general_utils import get_tkrs_from_clist, \
-                                LOGS_DIR, CDATA_DIR
-
+from utils.general_utils import get_tkrs_from_clist, LOGS_DIR, CDATA_DIR
 from utils.p_ch_pcts_utils import write_adj_cps_and_p_ch_pcts_csvs
-
 from utils.raw_datafiles_utils import write_tkr_datafile_csv
 
 
