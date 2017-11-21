@@ -34,9 +34,6 @@ def get_p_ch_pcts_df(tkr, mkt, tkrdir):
     pct_df.columns = pd.to_datetime(pct_df.loc['date'])
     pct_df.columns = pct_df.columns.to_period('M').to_timestamp('M')
     pct_df = pct_df.drop(['date'])
-
-    # shift columns to have pct changes be momentum leading up to start of month
-    pct_df.columns = pct_df.columns.shift(1) #  mom. at month start
     pct_df.index = ['price', 'mom1m', 'mom3m', 'mom6m', 'mom9m']
 
     return pct_df
@@ -48,8 +45,13 @@ def get_tkr_df(tkr, mkt, tkrdir):
     p_ch_pcts_df = get_p_ch_pcts_df(tkr, mkt, tkrdir)
     tkr_df = pd.concat([excel_df, p_ch_pcts_df]).loc[:, excel_df.columns[-1]:]
     tkr_df = tkr_df.fillna(method='ffill', axis=1)
+
+    # shift columns to have data be info that'd be available at start of month
+    tkr_df.columns = tkr_df.columns.shift(1)
+    
     tkr_df.columns = tkr_df.columns.strftime('%Y%m')
     tkr_df.drop('price', inplace=True)
+
     return tkr_df
 
 
