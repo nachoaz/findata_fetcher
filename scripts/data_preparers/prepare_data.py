@@ -118,7 +118,7 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
     return pd.concat(mapped_dfs.values(), axis=1)
 
 
-def attach_other_df(tkr, mf_df, pct_df, target='ebit_ttm'):
+def attach_other_cols(tkr, mf_df, pct_df, target='ebit_ttm'):
     tkr_df = mf_df.copy()
     tkr_df.index.rename('date', inplace=True)
     
@@ -129,14 +129,16 @@ def attach_other_df(tkr, mf_df, pct_df, target='ebit_ttm'):
 
     tkr_df.insert(0, 'bnd', 0.5)  # to be determined later
 
-    performance = pct_df['price'].pct_change(-12)
-    tkr_df.insert(0, 'perf', performance)
+    perf = pct_df.loc['price'].pct_change(12).shift(-(12-1))
+    perf.index = [str(date.year) + str(date.month).zfill(2) for date in
+            perf.index]
+    tkr_df.insert(0, 'perf', perf)
     
     tkr_df.insert(0, 'tic', tkr)
 
     tkr_df.insert(0, 'active', 1)
 
-    tkr_df.insert(0, 'month', [int(date[-2]) for date in tkr_df.index])
+    tkr_df.insert(0, 'month', [int(date[-2:]) for date in tkr_df.index])
 
     tkr_df.insert(0, 'year', [int(date[:4]) for date in tkr_df.index])
 
@@ -150,19 +152,5 @@ def get_tkr_df(tkr, mkt, feat_map='jda_map.txt'):
     fund_df = get_fundamentals_df(tkr, tkrdir, feat_map)
     mom_df, pct_df = get_momentum_df(tkr, tkrdir)
     mf_df = pd.concat([mom_df, fund_df], axis=1).loc[fund_df.index[0]:, :]
-    tkr_df = attach_other_feats(tkr, mf_df, pct_df)
+    tkr_df = attach_other_cols(tkr, mf_df, pct_df)
 
-
-
-
-
-
-
-
-
-
-
-mdfile_df = rdfile_df.loc[:, 
-        list(feat_map_df.rdfile_name) + ['mom1m', 'mom3m', 'mom6m', 'mom9m']]
-mdfile_df = mdfile_df.rename(
-        columns=dict(feat_map_df.loc[:, 'rdfile_name':'mdfile_name'].values))

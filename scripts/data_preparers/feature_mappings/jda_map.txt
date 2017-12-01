@@ -9,6 +9,7 @@ balance|Cash and Equivalents|cheq|mrq
 balance|Trade and Non-Trade Receivables|rect|mrq
 balance|Inventory|invtq|mrq
 balance|Investments Current|acoq|mrq
+balance|Property, Plant & Equipment Net|ppentq|mrq
 balance|Assets Non-Current|aoq|mrq
 balance|Debt Current|dlcq|mrq
 balance|Trade and Non-Trade Payables|apq|mrq
