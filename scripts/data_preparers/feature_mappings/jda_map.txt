@@ -16,3 +16,4 @@ balance|Trade and Non-Trade Payables|apq|mrq
 balance|Tax Liabilities|txpq|mrq
 balance|Deferred Revenue|lcoq|mrq
 balance|Total Liabilities|ltq|mrq
+income|Weighted Average Shares Diluted|cshoq_1yr_avg|mrq_implicit

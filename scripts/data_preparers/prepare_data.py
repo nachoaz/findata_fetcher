@@ -75,19 +75,20 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     # get data in correct version
     for feat, version in get_dict_from_df_cols(piece_map, 'mdfile_feat', 
                                                'version').items():
-        if version == 'ttm':
+        if 'ttm' in version:
             window = 4
-        elif version == 'tnm':
+        elif 'tnm' in version:
             window = 3
-        elif version == 'tsm':
+        elif 'tsm' in version:
             window = 2
-        elif version == 'mrq':
+        elif 'mrq' in version:
             window = 1
 
         sr_df[feat] = sr_df[feat].rolling(window=window).sum()
         # if missing bc can't roll back mark as mTM (missing trailing months)
         sr_df.iloc[:window-1, list(sr_df.columns).index(feat)] = 'mTM'
-        sr_df = sr_df.rename(index=str, columns={feat: feat + '_' + version})
+        sr_df = sr_df.rename(index=str, columns={feat: feat + '_' + version 
+                                        if 'implicit' not in version else feat})
 
     # stretch to include dates in between quarter starts
     date_range = pd.date_range(pd.to_datetime(sr_df.index[0], format='%Y%m'),
@@ -112,10 +113,23 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
 
     for piece in set(feat_map_df.srfile):
         piece_map = feat_map_df[feat_map_df.srfile == piece]
-        piece_mapped_df = get_piece_mapped_df(tkr, tkrdir, piece, piece_map)
-        mapped_dfs[piece] = piece_mapped_df
+        mapped_dfs[piece] = get_piece_mapped_df(tkr, tkrdir, piece, piece_map)
+
+    # put all ttm feats first, then all mrq, then rest
+    f_df = pd.concat(mapped_dfs.values(), axis=1)
+
+    l_cols = list()
+    r_cols = list()
+
+    for col in cols:
+        if ('_ttm' in col) or ('_mrq' in col):
+            l_cols.append(col)
+        else:
+            r_cols.append(col)
+
+    f_df = f_df.loc[:, l_cols + r_cols]
         
-    return pd.concat(mapped_dfs.values(), axis=1)
+    return f_df
 
 
 def attach_other_cols(tkr, mf_df, pct_df, target='ebit_ttm'):
@@ -153,4 +167,4 @@ def get_tkr_df(tkr, mkt, feat_map='jda_map.txt'):
     mom_df, pct_df = get_momentum_df(tkr, tkrdir)
     mf_df = pd.concat([mom_df, fund_df], axis=1).loc[fund_df.index[0]:, :]
     tkr_df = attach_other_cols(tkr, mf_df, pct_df)
-
+    return tkr_df
