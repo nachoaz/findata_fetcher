@@ -37,6 +37,21 @@ def get_qrtr_from_date(date):
     return str(year) + '-Q' + str(qrtr_num)
 
 
+def get_year_endmonth_from_qrtr(qrtr):
+    year, qrtr_num = qrtr.split('-')
+
+    if qrtr_num == 'Q1':
+        month = '03'
+    elif qrtr_num == 'Q2':
+        month = '06'
+    elif qrtr_num == 'Q3':
+        month = '09'
+    elif qrtr_num == 'Q4':
+        month = '12'
+
+    return year + month
+
+
 def get_qrtr_dates_btwn_sdate_edate(sdate, edate):
     "returns end date of each quarter from sdate to edate, if it's in [s, e]"
     qrtr_dates = list()
@@ -62,3 +77,8 @@ def get_qrtr_dates_btwn_sdate_edate(sdate, edate):
             dates_to_return.append(date)
 
     return dates_to_return
+
+
+def get_dict_from_df_cols(df, keycol, valcol):
+    "returns dict from pandas dataframe columns as specified"
+    return pd.Series(df.loc[:,valcol].values, index=df.loc[:, keycol]).to_dict()
