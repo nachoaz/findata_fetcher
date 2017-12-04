@@ -3,29 +3,20 @@
 
 import os
 import argparse
-import sys
-sys.path.append('../')
 
 import requests
 import urllib.request
 
 from utils.general_utils import get_tkrs_from_clist, \
+                                mkdir_if_not_exists, \
+                                report_and_register_error, \
                                 LOGS_DIR, CDATA_DIR
-
-def report_and_register_error(stat_pre, e, logpath):
-    print(stat_pre + ": FAILED")
-    print('\t\t* ' + str(e))
-    with open(logpath, 'a') as f:
-        f.write(stat_pre + ": FAILED\n")
-        f.write('\t\t* ' + str(e) + '\n')
 
 
 def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
     "downloads data from srow tkr (in .xlsx format), if not already present"
     srow_dir = os.path.join(tkrdir, 'srow_data')
-
-    if not os.path.exists(srow_dir):
-        os.makedirs(srow_dir)
+    mkdir_if_not_exists(srow_dir)
 
     base = "https://stockrow.com/api/companies/{}".format(tkr)
 
@@ -59,9 +50,7 @@ def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
 def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
     "downloads data from quandl for given tkr (in .csv format)"
     quandl_dir = os.path.join(tkrdir, 'quandl_data')
-
-    if not os.path.exists(quandl_dir):
-        os.makedirs(quandl_dir)
+    mkdir_if_not_exists(quandl_dir)
 
     base = 'https://www.quandl.com/api/v3/datasets/WIKI/'
     url = base + '{}.csv?api_key={}'.format(tkr, quandl_key)
@@ -83,35 +72,32 @@ def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
 
 def main(clist_pofix, quandl_key, overwrite):
 
-    #TODO: FIND CLEANER WAY OF DOING THIS
-    if not os.path.exists(LOGS_DIR):
-        os.makedirs(LOGS_DIR)
+    mkdir_if_not_exists(LOGS_DIR)
+    mkdir_if_not_exists(CDATA_DIR)
 
-    #TODO: FIND CLEANER WAY OF DOING THIS
-    if not os.path.exists(CDATA_DIR):
-        os.makedirs(CDATA_DIR)
-
-    for mkt in ["nasdaq", "nyse"]:
+    for mkt in ['nasdaq', 'nyse']:
+        # get list of tkrs to fetch data for
         clist = "{}_{}".format(mkt, clist_pofix)
         tkrs = get_tkrs_from_clist(clist)
 
+        # remove logfile
         logpath = LOGS_DIR + "/download_company_data_log_{}".format(clist)
         if os.path.exists(logpath):
             os.remove(logpath)
-            
-        #TODO: FIND CLEANER WAY OF DOING THIS
-        if not os.path.exists(CDATA_DIR + '/{}/'.format(mkt)):
-            os.makedirs(CDATA_DIR + '/{}/'.format(mkt))
+        
+        # ensure market directory within CDATA_DIR exists (to house tkr data)
+        mkdir_if_not_exists(CDATA_DIR + '/{}/'.format(mkt))
 
+        # fill that market directory with tkr data
         if tkrs:
             print("\nDownloading data for {}...".format(mkt))
         else:
             print("\nNo tkrs found for {}.\n".format(mkt))
 
         for tkr in tkrs:
-            print('Fetching data for {} ({})...'.format(tkr, mkt))
             tkrdir = CDATA_DIR + '/{}/{}'.format(mkt, tkr)
 
+            print('Fetching data for {} ({})...'.format(tkr, mkt))
             download_tkr_srow_data(tkr, tkrdir, logpath, overwrite)
             download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key)
 

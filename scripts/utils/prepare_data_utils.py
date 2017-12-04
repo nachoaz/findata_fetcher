@@ -6,14 +6,13 @@ sys.path.append('../')
 
 import pandas as pd
 
-from utils.general_utils import get_qrtr_from_date, \
-                                get_year_endmonth_from_qrtr, \
+from utils.general_utils import get_year_endmonth_from_qrtr, \
                                 get_dict_from_df_cols, \
                                 LOGS_DIR, CDATA_DIR
 
 
 def get_stockrow_df(sr_filepath):
-    "returns dict with excel files as pandas df, with piece as key"
+    "returns excel file as pandas df, with YYYY-QX as cols"
     df = pd.read_excel(sr_filepath)
 
     # ensure df's columns go from more recent to less recent

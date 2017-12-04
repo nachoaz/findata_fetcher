@@ -4,8 +4,6 @@ import os
 
 import pandas as pd
 
-from utils.general_utils import get_qrtr_dates_btwn_sdate_edate
-
 
 def write_and_get_adj_cp_csv(adj_cppath, quandl_path, logpath):
     stat_pre = "\t- Writing {}".format(adj_cppath)
@@ -90,4 +88,4 @@ def write_adj_cps_and_p_ch_pcts_csvs(tkr, tkrdir, logpath, overwrite):
     if not os.path.exists(p_ch_pctspath) or overwrite:
         write_p_ch_pcts_csv(logpath, p_ch_pctspath, adj_cp_df, adj_cppath)
     else:
-        print("\-t {} already exists.".format(p_ch_pctspath))
+        print("\t- {} already exists.".format(p_ch_pctspath))
