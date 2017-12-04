@@ -28,7 +28,7 @@ specified `clist`, `feat_map`, and `lag_months`.
 
 `python write_datafiles.py consg_tech_more_than_10_years_head`
 
-`python prepare_data.py consg_tech_more_than_10_years_head jda_map.txt 3`
+`python prepare_data.py consg_tech_more_than_10_years_head jda_map.txt`
 > Here, jda_map.txt is a `feat_map` file. A `feat_map` file should reside in
 > `scripts/feature_mappings`, should be postfixed as `.txt`, and should abide by
 > the following format:

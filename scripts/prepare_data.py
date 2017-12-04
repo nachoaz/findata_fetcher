@@ -60,13 +60,9 @@ if __name__ == '__main__':
                     mrq).""")
 
     parser.add_argument(
-            "log_months",
-            help="specifies how many months to lag fundamentals")
-
-    parser.add_argument(
-            "-o", "--overwrite",
-            help="overwrite .dat file or not",
-            action="store_true")
+            "-lm", "--lag_months",
+            help="specifies how many months to lag fundamentals",
+            default=3)
 
     args = parser.parse_args()
-    main(args.clist_pofix, args.feat_map, args.lag_months, args.overwrite)
+    main(args.clist_pofix, args.feat_map, args.lag_months)
