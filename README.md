@@ -16,16 +16,19 @@ specified `clist`, `feat_map`, and `lag_months`.
 
 ## Example
 `python write_clist_files.py clist_pofix`
-where clist_pofix specifies what you want your clist_files to be named.
+
+Where clist_pofix specifies what you want your clist_files to be named.
 *Note*: this is yet to be written.
 
 `python download_tkr_data.py consg_tech_more_than_10_years_head YOUR_API_KEY`
-here `consg_tech_more_than_10_years_head` is a clist_pofix specifying where to
+
+Here, `consg_tech_more_than_10_years_head` is a clist_pofix specifying where to
 find the list of companies to use.
 
 `python write_datafiles.py consg_tech_more_than_10_years_head`
 
 `python prepare_data.py consg_tech_more_than_10_years_head jda_map.txt 3`
+
 Here, jda_map.txt is a `feat_map` file. A `feat_map` file should reside in
 `scripts/feature_mappings`, should be postfixed as `.txt`, and should abide by
 the following format:
