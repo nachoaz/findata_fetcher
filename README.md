@@ -15,8 +15,11 @@ specified `clist`, `feat_map`, and `lag_months`.
 
 
 ## Example
-`python write_clist_files.py clist_pofix`
-> Where clist_pofix specifies what you want your clist_files to be named.
+`python write_clist_files.py clist_definer clist_pofix`
+> Where clist_definer is a file that specifies how to screen to get the list of
+> companies that you want (i.e. sector(s), market cap, years trading publicly,
+> etc.), and clist_pofix specifies what you want the names of your clist_files
+> to be postfixed by.
 > *Note*: this is yet to be written.
 
 `python download_tkr_data.py consg_tech_more_than_10_years_head YOUR_API_KEY`
