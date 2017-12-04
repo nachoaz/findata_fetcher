@@ -12,7 +12,7 @@ from utils.general_utils import get_tkrs_from_clist, \
 from utils.prepare_data_utils import get_tkr_df
 
 
-def main(clist_pofix, feat_map, lag_months, overwrite):
+def main(clist_pofix, feat_map, lag_months):
 
     dat_dir = os.path.join(os.path.dirname(CDATA_DIR), 'dat_files')
     mkdir_if_not_exists(dat_dir)
