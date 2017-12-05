@@ -96,7 +96,7 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     sr_df.fillna(method='ffill', inplace=True)
 
     # apply lag to make data realistic
-    sr_df = sr_df.shift(lag_months).iloc[lag_months+2:,:]
+    sr_df = sr_df.shift(lag_months)
 
     return sr_df
 
@@ -123,11 +123,15 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
             r_cols.append(col)
 
     f_df = f_df.loc[:, l_cols + r_cols]
+
+    # drop first 12 rows if these are gonna be mTM
+    if 'ttm' in set(feat_map_df.version):
+        f_df = f_df.iloc[12:,:]
         
     return f_df
 
 
-def attach_other_cols(tkr, mf_df, pct_df, target='ebit_ttm'):
+def attach_other_cols(tkr, mkt, mf_df, pct_df, target='ebit_ttm'):
     tkr_df = mf_df.copy()
     tkr_df.index.rename('date', inplace=True)
     
@@ -151,7 +155,8 @@ def attach_other_cols(tkr, mf_df, pct_df, target='ebit_ttm'):
 
     tkr_df.insert(0, 'year', [int(date[:4]) for date in tkr_df.index])
 
-    tkr_df.insert(0, 'gvkey', 60661)  # ignore this, it's an id for compustat
+    # use tkr and mkt to create unique identifier. #TODO: use hashing here
+    tkr_df.insert(0, 'gvkey', '1'+tkr if mkt == 'nasdaq' else '2'+tkr)  
 
     return tkr_df
 
@@ -161,5 +166,5 @@ def get_tkr_df(tkr, mkt, feat_map='jda_map.txt', lag_months=3):
     fund_df = get_fundamentals_df(tkr, tkrdir, feat_map)
     mom_df, pct_df = get_momentum_df(tkr, tkrdir)
     mf_df = pd.concat([mom_df, fund_df], axis=1).loc[fund_df.index[0]:, :]
-    tkr_df = attach_other_cols(tkr, mf_df, pct_df)
+    tkr_df = attach_other_cols(tkr, mkt, mf_df, pct_df)
     return tkr_df
