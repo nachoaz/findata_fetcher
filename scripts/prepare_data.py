@@ -42,7 +42,7 @@ def main(clist_pofix, feat_map, lag_months):
             except Exception as err:
                 report_and_register_error(stat_pre, err, logpath)
 
-    big_df = pd.concat(tkr_dfs.values())
+    big_df = get_big_df(tkr_dfs)
     big_df.to_csv(dat_filepath, sep=' ', index=False)
 
 

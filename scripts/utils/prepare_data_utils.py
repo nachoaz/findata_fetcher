@@ -4,7 +4,9 @@ import os
 import sys
 sys.path.append('../')
 
+import numpy as np
 import pandas as pd
+from scipy.stats import percentileofscore
 
 from utils.general_utils import get_year_endmonth_from_qrtr, \
                                 get_dict_from_df_cols, \
@@ -44,9 +46,9 @@ def get_momentum_df(tkr, tkrdir):
     df_to_ret.columns = [str(col.year).zfill(4) + str(col.month).zfill(2) 
                          for col in df_to_ret.columns]
     df_to_ret = df_to_ret.shift(1, axis=1)
-    df_to_ret = df_to_ret.transpose().drop('price', axis=1)
-    return df_to_ret, pct_df
-
+    df_to_ret = df_to_ret.transpose().loc[:,['mom1m', 'mom3m', 'mom6m', 'mom9m',
+                                             'price']]
+    return df_to_ret
 
 def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     """
@@ -58,14 +60,26 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     srow_dir = os.path.join(tkrdir, 'srow_data')
     sr_filepath = os.path.join(srow_dir, '{}_{}.xlsx'.format(tkr, piece))
 
-    # read stockrow df, take wanted features, rename those to have wanted names
-    sr_df = get_stockrow_df(sr_filepath).loc[piece_map.srfile_feat.values, :]
-    sr_df = sr_df.rename(get_dict_from_df_cols(piece_map, 'srfile_feat', 
-                                               'mdfile_feat'))
+    # read stockrow df, mark missing values accordingly
+    sr_df = get_stockrow_df(sr_filepath)
     sr_df.fillna("mSR", inplace=True)  # if missing bc not in .xlsx mark as mSR
-
     sr_df.columns = map(get_year_endmonth_from_qrtr, sr_df.columns)
     sr_df = sr_df.transpose()
+
+    # rename and shave off whatever not wanted
+    sr_df_copy = sr_df.copy()
+
+    if piece == 'income':
+        needed_cols= ['Weighted Average Shares']
+    elif piece == 'balance':
+        needed_cols = ['Total Debt', 'Cash and Equivalents']
+    else:
+        needed_cols = []
+        
+    sr_df.rename(get_dict_from_df_cols(piece_map, 'srfile_feat', 'mdfile_feat'),
+                 axis=1, inplace = True)
+    sr_df = pd.concat([sr_df_copy.loc[:, needed_cols], 
+                       sr_df.loc[:, piece_map.mdfile_feat.values]], axis=1)
 
     # get data in correct version
     for feat, version in get_dict_from_df_cols(piece_map, 'mdfile_feat', 
@@ -101,7 +115,7 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     return sr_df
 
 
-def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
+def get_fundamentals_df(tkr, tkrdir, mom_df, feat_map='jda_map.txt'):
     "returns df with mapped excel files as concatenated pandas df"
     feat_map_df = pd.read_csv('feature_mappings/{}'.format(feat_map), sep='|')
     mapped_dfs = dict()
@@ -110,41 +124,57 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
         piece_map = feat_map_df[feat_map_df.srfile == piece]
         mapped_dfs[piece] = get_piece_mapped_df(tkr, tkrdir, piece, piece_map)
 
-    # put all ttm feats first, then all mrq, then rest
     f_df = pd.concat(mapped_dfs.values(), axis=1)
 
+    # put all ttm feats first, then all mrq, then rest
     l_cols = list()
+    m_cols = list()
     r_cols = list()
 
     for col in f_df.columns:
-        if ('_ttm' in col) or ('_mrq' in col):
+        if '_ttm' in col:
             l_cols.append(col)
+        elif '_mrq' in col:
+            m_cols.append(col)
         else:
             r_cols.append(col)
 
-    f_df = f_df.loc[:, l_cols + r_cols]
+    f_df = f_df.loc[:, l_cols + m_cols + r_cols]
+
+    # get mktcap using mom_df
+    mrkcap = mom_df.loc[f_df.index[0]:,:]['price'] \
+             * f_df['Weighted Average Shares']
+    mom_df['mrkcap'] = mrkcap
+
+    # get entval
+    entval = mom_df.mrkcap \
+            + f_df.loc[:, 'Total Debt'] \
+            - f_df.loc[:, 'Cash and Equivalents']
+    mom_df['entval'] = entval
 
     # drop first 12 rows if these are gonna be mTM
     if 'ttm' in set(feat_map_df.version):
         f_df = f_df.iloc[12:,:]
-        
-    return f_df
+
+    # drop columns us to compute mktcap and entval
+    f_df.drop(['Weighted Average Shares', 'Total Debt', 'Cash and Equivalents'],
+              axis=1, inplace=True)
+
+    # drop excess mom_df dates
+    mom_df = mom_df.loc[f_df.index[0]:, :]
+
+    return mom_df, f_df
 
 
-def attach_other_cols(tkr, mkt, mf_df, pct_df, target='ebit_ttm'):
-    tkr_df = mf_df.copy()
+def attach_other_cols(tkr, mkt, fund_df, mom_df):
+    tkr_df = pd.concat([mom_df.drop('price', axis=1), fund_df], axis=1)
     tkr_df.index.rename('date', inplace=True)
     
-    tkr_df.rename(index=str, columns={target:'target'}, inplace=True)
-    target_s = tkr_df['target']
-    tkr_df.drop(labels=['target'], axis=1, inplace=True)
-    tkr_df.insert(0, 'target', target_s)
+    tkr_df.insert(0, 'target', 0.5)
 
     tkr_df.insert(0, 'bnd', 0.5)  # to be determined later
 
-    perf = pct_df.loc['price'].pct_change(12).shift(-(12-1))
-    perf.index = [str(date.year) + str(date.month).zfill(2) for date in
-            perf.index]
+    perf = mom_df.loc[:, 'price'].pct_change(12).shift(-12)
     tkr_df.insert(0, 'perf', perf)
     
     tkr_df.insert(0, 'tic', tkr)
@@ -163,8 +193,39 @@ def attach_other_cols(tkr, mkt, mf_df, pct_df, target='ebit_ttm'):
 
 def get_tkr_df(tkr, mkt, feat_map='jda_map.txt', lag_months=3):
     tkrdir = '/'.join([CDATA_DIR, mkt, tkr])
-    fund_df = get_fundamentals_df(tkr, tkrdir, feat_map)
-    mom_df, pct_df = get_momentum_df(tkr, tkrdir)
-    mf_df = pd.concat([mom_df, fund_df], axis=1).loc[fund_df.index[0]:, :]
-    tkr_df = attach_other_cols(tkr, mkt, mf_df, pct_df)
+    mom_df = get_momentum_df(tkr, tkrdir)
+    mom_df, fund_df = get_fundamentals_df(tkr, tkrdir, mom_df, feat_map)
+    tkr_df = attach_other_cols(tkr, mkt, fund_df, mom_df)
     return tkr_df
+
+
+def get_big_df(tkr_dfs):
+
+    ### make all dfs of same shape
+    # prepare dates
+    start_end_dates = [(df.index[0], df.index[-1]) for df in tkr_dfs.values()]
+    start_dates, end_dates = zip(*start_end_dates)
+    abs_start = min(start_dates)
+    abs_end = max(end_dates)
+    date_range = pd.date_range(pd.to_datetime(abs_start, format='%Y%m'),
+                               pd.to_datetime(abs_end, format='%Y%m'),
+                               freq='M')
+    dates = [str(d.year).zfill(4) + str(d.month).zfill(2) for d in date_range]
+    dates_df = pd.DataFrame(['na']*len(dates), columns=['ignore'], index=dates)
+    
+    # extend dfs
+    ext_dfs = dict()
+    for key, df in tkr_dfs.items():
+        ext_dfs[key] = pd.concat([df, dates_df], axis=1).drop('ignore', axis=1)
+
+    ### get rankings
+    # create tensor to house extended df values
+    tensor = np.zeros((len(ext_dfs.values()), df.shape[0], df.shape[1]))
+    for i, df in enumerate(ext_dfs.values()): tensor[i] = df.values
+
+    # get rankings
+
+    ### get everything back to where it should be
+    # restore orginal dates
+
+    # concatenate everything together
