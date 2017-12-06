@@ -208,7 +208,8 @@ def get_big_df(tkr_dfs):
     abs_start = min(start_dates)
     abs_end = max(end_dates)
     date_range = pd.date_range(pd.to_datetime(abs_start, format='%Y%m'),
-                               pd.to_datetime(abs_end, format='%Y%m'),
+                               pd.to_datetime(abs_end, format='%Y%m') 
+                               + pd.DateOffset(months=1),
                                freq='M')
     dates = [str(d.year).zfill(4) + str(d.month).zfill(2) for d in date_range]
     dates_df = pd.DataFrame(['na']*len(dates), columns=['ignore'], index=dates)
