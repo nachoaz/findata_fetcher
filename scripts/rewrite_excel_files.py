@@ -1,6 +1,9 @@
 # rewrite_excel_files.py
 
+from collections import Counter
+
 import os
+import numpy as np
 import pandas as pd
 
 from utils.general_utils import CDATA_DIR, get_stockrow_df
@@ -18,27 +21,55 @@ renaming_maps = {
     'balance': {
         },
     'cashflow': {
+        'Depreciation, Amortization & Accretion': 'Depreciation & Amortization',
+        'Net Cash Flow from Operations': 'Operating Cash Flow',
+        'Net Cash Flow from Investing': 'Investing Cash Flow',
+        'Net Cash Flow from Financing': 'Financing Cash Flow'
         },
     'metrics': {
+        'Earnings per Basic Share Growth': 'EPS Growth',
+        'Earnings per Diluted Share Growth': 'EPS Diluted Growth'
         },
     'growth': {
         }
     }
 
 
-# format: ((interchangable, rows, in, order, of what, to take), what to call it)
+# format: ([interchangable, rows, in, order, of what, to take], what to call it)
 redundant_rows = {
     'income': [
         (['Revenues (USD)', 'Revenues'], 'Revenues'),
         (['Earning Before Interest & Taxes (USD)',
-          'Earning Before Interest & Taxes (EBIT)',
-          'Earnings before Tax'], 'Earning Before Interest & Taxes (EBIT)'),
+          'Earning Before Interest & Taxes (EBIT)'], 
+         'Earning Before Interest & Taxes (EBIT)'),
         (['Earnings per Basic Share (USD)', 'Earnings per Basic Share'], 
-          'Earnings per Basic Share')],
-    'balance': [],
+          'Earnings per Basic Share'),
+        (['Net Income', 'Net Income Common Stock (USD)'], 'Net Income')],
+    'balance': [
+        (['Cash and Equivalents (USD)', 'Cash and Equivalents'], 
+        'Cash and Equivalents'),
+        (['Shareholders Equity (USD)', 'Shareholders Equity'], 
+        'Shareholders Equity'),
+        (['Total Debt (USD)', 'Total Debt'], 'Total Debt')],
     'cashflow': [],
     'metrics': [],
     'growth': []
+    }
+
+rows_to_drop = {
+    'income': [],
+    'balance': [],
+    'cashflow': [],
+    'metrics': ['Revenue Growth']
+    }
+
+rows_to_add = {
+    'income': ['Consolidated Income', 'EBIT Margin', 'EBITDA Margin', \
+               'Profit Margin', 'Revenue Growth', 'Free Cash Flow Margin'],
+    'balance': ['Cash and Short Term Investments'],
+    'cashflow': [],
+    'metrics': ['Book Value per Share Growth', 
+                'Dividends per Basic Common Share Growth']
     }
 
 
@@ -76,27 +107,42 @@ def remove_redundant_rows(df, piece, tkr):
         drop_other_rows_rename_row_to_keep(df, r_rows, name) 
 
 
+def drop_rows_to_drop(df, piece):
+    """Removes rows that are still in df and should be dropped."""
+    rows = rows_to_drop[piece]
+    df.drop(rows, inplace=True)
+
+
+def add_rows_to_add(df, piece):
+    """Adds rows that need to be added to df in order to match new format."""
+    rows = rows_to_add[piece]
+    for row in rows: df.loc[row] = np.array([np.nan]*len(df.columns))
+    
+
 def rewrite_excel_file_for_tkr(tkrdir, piece):
     """
-    Rewrites excel file corresponding to piece, dropping redunant rows and
-    renaming rows that should be renamed.
+    Rewrites excel file corresponding to piece to abide by current stockrow.com
+    format. Redundant rows are dropped and rows that should be renamed are
+    renamed in accordance to renaming_map (global variable).
     """
     tkr = os.path.basename(tkrdir)
     xlpath = os.path.join(tkrdir, "srow_data", "{}_{}.xlsx".format(tkr, piece))
 
-    df = get_stockrow_df(xlpath)
+    df = pd.read_excel(xlpath)
+
+    # remove redunant rows and rename rows that should be renamed
     remove_redundant_rows(df, piece, tkr)
     rmap = renaming_maps[piece]
-    df.rename(rmap)
-    
-    
-def rewrite_excel_files_for_tkr(tkrdir):
-    """
-    Rewrites excel files for tkr to abide by current stockrow.com format.
-    Translation is done in accordance with renaming_map (global variable).
-    """
-    for piece in ('income', 'balance', 'cashflow', 'metrics', 'growth'):
-        rewrite_excel_file(tkrdir, piece)
+    df.rename(rmap, inplace=True)
+
+    # drop rows that aren't present in the new format, add rows that are but
+    # aren't in the old format
+    drop_rows_to_drop(df, piece)
+    add_rows_to_add(df, piece)
+
+    # save file
+    df.to_excel(xlpath, columns=list(map(lambda x: str(x).split(' ')[0],
+                                         df.columns)))
 
 
 def main():
@@ -105,7 +151,12 @@ def main():
     for mkt in mkts:
         tkrs = listdir_nohidden(os.path.join(CDATA_DIR, mkt))
         for tkr in tkrs:
-            rewrite_excel_files_for_tkr(tkr)
+            tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
+            for piece in ('income', 'balance', 'cashflow', 'metrics', 'growth'):
+                try:
+                    rewrite_excel_file(tkrdir, piece)
+                except TypeError:
+                    print("Error rewriting {} file for {}".format(piece, tkr))
 
 
 if __name__ == '__main__':

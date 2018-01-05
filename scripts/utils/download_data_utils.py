@@ -3,8 +3,9 @@
 import os
 import sys
 sys.path.append('../')
-
 import time
+import requests
+
 import numpy as np
 import pandas as pd
 

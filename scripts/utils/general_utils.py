@@ -1,6 +1,9 @@
+# general_utils.py
+
 import os
 import sys
 import csv
+from collections import Counter
 from itertools import compress
 
 import pandas as pd
@@ -30,9 +33,18 @@ def get_stockrow_df(sr_filepath):
 
     years = [col.year for col in df.columns]
     counts = Counter(years)
+
+    def get_q_range(year):
+        is_first_year = lambda year : year == sorted(set(years))[0]
+        if is_first_year(year):
+            q_range = range(4, counts[year], -1)
+        else:
+            q_range = range(counts[year], 0, -1)
+        return q_range
+
     new_cols = [str(year) + '-Q' + str(qrtr_num)
                 for year in sorted(set(years), reverse=True)
-                for qrtr_num in range(counts[year], 0, -1)]
+                for qrtr_num in get_q_range(year)]
     df.columns = new_cols[:df.shape[1]]
 
     # ensure df's columns go from less recent to most recent
