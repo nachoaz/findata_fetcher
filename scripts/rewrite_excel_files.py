@@ -27,10 +27,10 @@ renaming_maps = {
         'Net Cash Flow from Financing': 'Financing Cash Flow'
         },
     'metrics': {
-        'Earnings per Basic Share Growth': 'EPS Growth',
-        'Earnings per Diluted Share Growth': 'EPS Diluted Growth'
         },
     'growth': {
+        'Earnings per Basic Share Growth': 'EPS Growth',
+        'Earnings per Diluted Share Growth': 'EPS Diluted Growth'
         }
     }
 
@@ -60,7 +60,8 @@ rows_to_drop = {
     'income': [],
     'balance': [],
     'cashflow': [],
-    'metrics': ['Revenue Growth']
+    'metrics': [],
+    'growth': ['Revenue Growth']
     }
 
 rows_to_add = {
@@ -68,7 +69,8 @@ rows_to_add = {
                'Profit Margin', 'Revenue Growth', 'Free Cash Flow Margin'],
     'balance': ['Cash and Short Term Investments'],
     'cashflow': [],
-    'metrics': ['Book Value per Share Growth', 
+    'metrics': [],
+    'growth': ['Book Value per Share Growth', 
                 'Dividends per Basic Common Share Growth']
     }
 
@@ -127,7 +129,6 @@ def rewrite_excel_file_for_tkr(tkrdir, piece):
     """
     tkr = os.path.basename(tkrdir)
     xlpath = os.path.join(tkrdir, "srow_data", "{}_{}.xlsx".format(tkr, piece))
-
     df = pd.read_excel(xlpath)
 
     # remove redunant rows and rename rows that should be renamed
