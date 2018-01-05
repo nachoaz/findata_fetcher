@@ -20,6 +20,26 @@ def mkdir_if_not_exists(dirpath):
         os.makedirs(dirpath)
 
 
+def get_stockrow_df(sr_filepath):
+    "returns excel file as pandas df, with YYYY-QX as cols"
+    df = pd.read_excel(sr_filepath)
+
+    # ensure df's columns go from more recent to less recent
+    if df.columns[0] < df.columns[-1]:
+        df = df.loc[:, df.columns[::-1]]
+
+    years = [col.year for col in df.columns]
+    counts = Counter(years)
+    new_cols = [str(year) + '-Q' + str(qrtr_num)
+                for year in sorted(set(years), reverse=True)
+                for qrtr_num in range(counts[year], 0, -1)]
+    df.columns = new_cols[:df.shape[1]]
+
+    # ensure df's columns go from less recent to most recent
+    df = df.loc[:, df.columns[::-1]]
+    return df
+
+
 def report_and_register_error(stat_pre, e, logpath):
       print(stat_pre + ": FAILED")
       print('\t\t* ' + str(e))
@@ -30,8 +50,9 @@ def report_and_register_error(stat_pre, e, logpath):
 
 def get_tkrs_from_clist(clist):
     "returns contents of clist.csv as a sorted list"
-    if os.path.exists(CLIST_DIR + '/{}.csv'.format(clist)):
-        with open(CLIST_DIR + '/{}.csv'.format(clist), 'r') as f:
+    clist_file = CLIST_DIR + '/{}.csv'.format(clist)
+    if os.path.exists(clist_file):
+        with open(clist_file, 'r') as f:
             reader = csv.reader(f)
             tkrs = list(reader)
 

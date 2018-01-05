@@ -6,6 +6,7 @@ sys.path.append('../')
 
 import numpy as np
 import pandas as pd
+from collections import Counter
 from scipy.stats import percentileofscore
 
 from utils.general_utils import get_year_endmonth_from_qrtr, \
@@ -22,10 +23,10 @@ def get_stockrow_df(sr_filepath):
         df = df.loc[:, df.columns[::-1]]
 
     years = [col.year for col in df.columns]
-    latest_year_count = years.count(years[0])
+    counts = Counter(years)
     new_cols = [str(year) + '-Q' + str(qrtr_num)
                 for year in sorted(set(years), reverse=True) 
-                for qrtr_num in range(4, 0, -1)]
+                for qrtr_num in range(counts[year], 0, -1)]
     df.columns = new_cols[:df.shape[1]]
 
     # ensure df's columns go from less recent to most recent
@@ -221,7 +222,7 @@ def get_big_df(tkr_dfs):
 
     ### get rankings
     # create tensor to house extended df values
-    tensor = np.zeros((len(ext_dfs.values()), df.shape[0], df.shape[1]))
+    tensor = np.zeros((len(ext_dfs.values()), *list(ext_dfs.values())[0].shape))
     for i, df in enumerate(ext_dfs.values()): tensor[i] = df.values
 
     # get rankings
