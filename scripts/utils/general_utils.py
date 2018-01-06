@@ -37,7 +37,7 @@ def get_stockrow_df(sr_filepath):
     def get_q_range(year):
         is_first_year = lambda year : year == sorted(set(years))[0]
         if is_first_year(year):
-            q_range = range(4, counts[year], -1)
+            q_range = range(4, 4-counts[year], -1)
         else:
             q_range = range(counts[year], 0, -1)
         return q_range

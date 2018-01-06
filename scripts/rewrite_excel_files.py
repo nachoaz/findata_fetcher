@@ -27,6 +27,8 @@ renaming_maps = {
         'Net Cash Flow from Financing': 'Financing Cash Flow'
         },
     'metrics': {
+        'Free Cash Flow per Share': 'FCF per Share',
+        'Tangible Assets Book Value per Share': 'Tangible Book Value per Share'
         },
     'growth': {
         'Earnings per Basic Share Growth': 'EPS Growth',
@@ -44,7 +46,8 @@ redundant_rows = {
          'Earning Before Interest & Taxes (EBIT)'),
         (['Earnings per Basic Share (USD)', 'Earnings per Basic Share'], 
           'Earnings per Basic Share'),
-        (['Net Income', 'Net Income Common Stock (USD)'], 'Net Income')],
+        (['Net Income Common Stock (USD)', 'Net Income Common Stock'], 
+        'Net Income Common Stock')],
     'balance': [
         (['Cash and Equivalents (USD)', 'Cash and Equivalents'], 
         'Cash and Equivalents'),
@@ -60,7 +63,12 @@ rows_to_drop = {
     'income': [],
     'balance': [],
     'cashflow': [],
-    'metrics': [],
+    'metrics': ['EBITDA Margin', 'Profit Margin', 'Average Days of Receivables',
+                'Average Days of Payables', 'Days of Inventory on Hand',
+                'Account Receivables Turnover', 'Account Payables Turnover',
+                'Inventory Turnover', 'Share Dilution Ratio',
+                'Earnings Before Interest, Taxes & Depreciation Amortization
+                (USD)', 'EBIT Margin', 'Free Cash Flow Margin'],
     'growth': ['Revenue Growth']
     }
 
@@ -69,7 +77,7 @@ rows_to_add = {
                'Profit Margin', 'Revenue Growth', 'Free Cash Flow Margin'],
     'balance': ['Cash and Short Term Investments'],
     'cashflow': [],
-    'metrics': [],
+    'metrics': ['Total Debt To Total Assets'],
     'growth': ['Book Value per Share Growth', 
                 'Dividends per Basic Common Share Growth']
     }
@@ -155,7 +163,8 @@ def main():
             tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
             for piece in ('income', 'balance', 'cashflow', 'metrics', 'growth'):
                 try:
-                    rewrite_excel_file(tkrdir, piece)
+                    rewrite_excel_file_for_tkr(tkrdir, piece)
+                    print("Rewrote {} file for {}".format(piece, tkr))
                 except TypeError:
                     print("Error rewriting {} file for {}".format(piece, tkr))
 
