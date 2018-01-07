@@ -19,32 +19,36 @@ def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
     mkdir_if_not_exists(srow_dir)
 
     base = "https://stockrow.com/api/companies/{}".format(tkr)
+    temp_filepath = os.path.join(srow_dir, "temp.xlsx")
 
-    piece_to_ppiece = {
-            'Income Statement': 'income',
-            'Balance Sheet': 'balance',
-            'Cash Flow': 'cashflow',
-            'Metrics': 'metrics',
-            'Growth': 'growth'}
+    piece_to_ppiece = [
+            ('Income Statement', 'income'),
+            ('Balance Sheet', 'balance'),
+            ('Cash Flow', 'cashflow'),
+            ('Metrics', 'metrics'),
+            ('Growth', 'growth')]
 
-    for piece, ppiece in piece_to_ppiece.items():
+    for piece, ppiece in piece_to_ppiece:
         url = base + "/financials.xlsx?dimension=MRQ&section={}".format(piece)
         xlsx_filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tkr, ppiece))
-
         stat_pre = "\t- Writing {}".format(xlsx_filepath)
 
-        if not os.path.exists(xlsx_filepath) or overwrite:
+        if not os.path.exists(xlsx_filepath) or mode in {'overwrite', 'update'}:
             try:
-                response = requests.get(url)
-                with open(xlsx_filepath, 'wb') as f:
-                    f.write(response.content)
-                print(stat_pre + ": SUCCESSFUL")
+                download_xlsx_file(url, temp_filepath)
+
+                if not os.path.exists(xlsx_filepath) or mode == 'overwrite':
+                    os.rename(temp_filepath, xlsx_filepath)
+
+                else:
+                    update_xlsx_file(xlsx_filepath, temp_filepath)
+                    os.remove(temp_filepath)
 
             except requests.HTTPError as e:
                 report_and_register_error(stat_pre, e, logpath)
 
         else:
-            print("\t- {} already exists.".format(xlsx_filepath))
+            print("\t- {} already exists, was left as is".format(xlsx_filepath))
 
 
 def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
