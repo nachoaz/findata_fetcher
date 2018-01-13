@@ -10,7 +10,7 @@ from utils.general_utils import report_and_register_error
 
 
 def download_file_from_url(url, filepath):
-    """Downloads xlsx file at url, saves at filepath."""
+    """Downloads file at url, saves at filepath."""
     time.sleep(3)
     response = requests.get(url)
     with open(filepath, 'wb') as f:
