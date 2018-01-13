@@ -4,19 +4,14 @@
 import os
 import argparse
 
-import time
-import requests
-import urllib.request
-
 from utils.general_utils import get_tkrs_from_clist, \
                                 rm_file_if_exists, \
                                 mkdir_if_not_exists, \
-                                report_and_register_error, \
                                 LOGS_DIR, CDATA_DIR
 
-from utils.download_data_utils import download_file_from_url
+from utils.download_data_utils import download_and_report_outcome
 
-                                
+
 def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
     "Downloads data from srow tkr (in .xlsx format), if not already present."
     srow_dir = os.path.join(tkrdir, 'srow_data')
@@ -32,11 +27,11 @@ def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
           ('Growth', 'growth')]
 
     for ppiece, piece in ppiece_to_piece:
-      url = base + "/financials.xlsx?dimension=MRQ&section={}".format(ppiece)
-      filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tkr, piece))
-      stat_pre = "\t- Writing {}".format(filepath)
+        url = base + "/financials.xlsx?dimension=MRQ&section={}".format(ppiece)
+        filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tkr, piece))
+        stat_pre = "\t- Writing {}".format(filepath)
 
-      download_and_report_outcome(url, filepath, logpath, stat_pre, overwrite)
+        download_and_report_outcome(url, filepath, logpath, stat_pre, overwrite)
 
 
 def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
@@ -71,7 +66,7 @@ def main(clist_pofix, quandl_key, overwrite):
         logfile_basename = "download_company_data_log_{}".format(clist)
         logpath = os.path.join(LOGS_DIR, logfile_basename)
         rm_file_if_exists(logpath)
-        
+
         # ensure market directory within CDATA_DIR exists (to house tkr data)
         mkdir_if_not_exists(os.path.join(CDATA_DIR, mkt))
 
