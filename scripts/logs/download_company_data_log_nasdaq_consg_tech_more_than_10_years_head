@@ -1,4 +1,0 @@
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRID/quandl_data/BRID_quandl.csv: FAILED
-		* HTTP Error 404: Not Found
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CENT/quandl_data/CENT_quandl.csv: FAILED
-		* HTTP Error 404: Not Found

@@ -1,4 +1,0 @@
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFA/quandl_data/BFA_quandl.csv: FAILED
-		* HTTP Error 404: Not Found
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFB/quandl_data/BFB_quandl.csv: FAILED
-		* HTTP Error 404: Not Found

@@ -1,4 +1,0 @@
-Appending data for BFA (nyse)...: FAILED
-		* index 0 is out of bounds for axis 0 with size 0
-Appending data for BFB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFB/cp_data/BFB_p_ch_pcts.csv' does not exist

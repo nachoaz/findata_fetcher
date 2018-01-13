@@ -4,78 +4,61 @@
 import os
 import argparse
 
+import time
 import requests
 import urllib.request
 
 from utils.general_utils import get_tkrs_from_clist, \
+                                rm_file_if_exists, \
                                 mkdir_if_not_exists, \
                                 report_and_register_error, \
                                 LOGS_DIR, CDATA_DIR
 
+from utils.download_data_utils import download_file_from_url
 
+                                
 def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
-    "downloads data from srow tkr (in .xlsx format), if not already present"
+    "Downloads data from srow tkr (in .xlsx format), if not already present."
     srow_dir = os.path.join(tkrdir, 'srow_data')
     mkdir_if_not_exists(srow_dir)
 
     base = "https://stockrow.com/api/companies/{}".format(tkr)
-    temp_filepath = os.path.join(srow_dir, "temp.xlsx")
 
-    piece_to_ppiece = [
-            ('Income Statement', 'income'),
-            ('Balance Sheet', 'balance'),
-            ('Cash Flow', 'cashflow'),
-            ('Metrics', 'metrics'),
-            ('Growth', 'growth')]
+    ppiece_to_piece = [
+          ('Income Statement', 'income'),
+          ('Balance Sheet', 'balance'),
+          ('Cash Flow', 'cashflow'),
+          ('Metrics', 'metrics'),
+          ('Growth', 'growth')]
 
-    for piece, ppiece in piece_to_ppiece:
-        url = base + "/financials.xlsx?dimension=MRQ&section={}".format(piece)
-        xlsx_filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tkr, ppiece))
-        stat_pre = "\t- Writing {}".format(xlsx_filepath)
+    for ppiece, piece in ppiece_to_piece:
+      url = base + "/financials.xlsx?dimension=MRQ&section={}".format(ppiece)
+      filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tkr, piece))
+      stat_pre = "\t- Writing {}".format(filepath)
 
-        if not os.path.exists(xlsx_filepath) or mode in {'overwrite', 'update'}:
-            try:
-                download_xlsx_file(url, temp_filepath)
-
-                if not os.path.exists(xlsx_filepath) or mode == 'overwrite':
-                    os.rename(temp_filepath, xlsx_filepath)
-
-                else:
-                    update_xlsx_file(xlsx_filepath, temp_filepath)
-                    os.remove(temp_filepath)
-
-            except requests.HTTPError as e:
-                report_and_register_error(stat_pre, e, logpath)
-
-        else:
-            print("\t- {} already exists, was left as is".format(xlsx_filepath))
+      download_and_report_outcome(url, filepath, logpath, stat_pre, overwrite)
 
 
 def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
-    "downloads data from quandl for given tkr (in .csv format)"
+    "Downloads data from quandl for given tkr (in .csv format)."
     quandl_dir = os.path.join(tkrdir, 'quandl_data')
     mkdir_if_not_exists(quandl_dir)
 
-    base = 'https://www.quandl.com/api/v3/datasets/WIKI/'
-    url = base + '{}.csv?api_key={}'.format(tkr, quandl_key)
-    quandl_filepath = os.path.join(quandl_dir, "{}_quandl.csv".format(tkr))
+    base = 'https://www.quandl.com/api/v3/datasets/WIKI'
+    url = base + '/{}.csv?api_key={}'.format(tkr, quandl_key)
+    filepath = os.path.join(quandl_dir, "{}_quandl.csv".format(tkr))
 
-    stat_pre = "\t- Writing {}".format(quandl_filepath)
+    stat_pre = "\t- Writing {}".format(filepath)
 
-    if not os.path.exists(quandl_filepath) or overwrite:
-        try:
-            urllib.request.urlretrieve(url, quandl_filepath)
-            print(stat_pre + ": SUCCESSFUL")
-
-        except urllib.request.HTTPError as e:
-            report_and_register_error(stat_pre, e, logpath)
-
-    else:
-        print("\t- {} already exists.".format(quandl_filepath))
+    download_and_report_outcome(url, filepath, logpath, stat_pre, overwrite)
 
 
 def main(clist_pofix, quandl_key, overwrite):
-
+    """
+    Downloads fundamentals as excel files from stockrow, daily trading data as a
+    .csv from quandl, for tkrs listed in the specified clists. (Each clist is
+    derived from the clist_pofix, and corresponds to different markets.)
+    """
     mkdir_if_not_exists(LOGS_DIR)
     mkdir_if_not_exists(CDATA_DIR)
 
@@ -85,12 +68,12 @@ def main(clist_pofix, quandl_key, overwrite):
         tkrs = get_tkrs_from_clist(clist)
 
         # remove logfile
-        logpath = LOGS_DIR + "/download_company_data_log_{}".format(clist)
-        if os.path.exists(logpath):
-            os.remove(logpath)
+        logfile_basename = "download_company_data_log_{}".format(clist)
+        logpath = os.path.join(LOGS_DIR, logfile_basename)
+        rm_file_if_exists(logpath)
         
         # ensure market directory within CDATA_DIR exists (to house tkr data)
-        mkdir_if_not_exists(CDATA_DIR + '/{}/'.format(mkt))
+        mkdir_if_not_exists(os.path.join(CDATA_DIR, mkt))
 
         # fill that market directory with tkr data
         if tkrs:
@@ -99,7 +82,7 @@ def main(clist_pofix, quandl_key, overwrite):
             print("\nNo tkrs found for {}.\n".format(mkt))
 
         for tkr in tkrs:
-            tkrdir = CDATA_DIR + '/{}/{}'.format(mkt, tkr)
+            tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
 
             print('Fetching data for {} ({})...'.format(tkr, mkt))
             download_tkr_srow_data(tkr, tkrdir, logpath, overwrite)
