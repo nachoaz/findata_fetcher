@@ -15,7 +15,8 @@ the `.dat` file corresponding to your specified `clist`, `feat_map`, and
 `lag_months`.
 
 
-## Example `python write_clist_files.py clist_definer clist_pofix`
+## Example 
+`python write_clist_files.py clist_definer clist_pofix`
 > Where clist_definer is a file that specifies how to screen to get the list of
 > companies that you want (i.e. sector(s), market cap, years trading publicly,
 > etc.), and clist_pofix specifies what you want the names of your clist_files
@@ -25,7 +26,7 @@ the `.dat` file corresponding to your specified `clist`, `feat_map`, and
 > Here, `consg_tech_more_than_10_years_head` is a clist_pofix specifying where
 > to find the list of companies to use.
 
-`python write_datafiles.py consg_tech_more_than_10_years_head`
+`python write_cp_datafiles.py consg_tech_more_than_10_years_head`
 
 `python prepare_data.py consg_tech_more_than_10_years_head jda_map.txt`
 > Here, jda_map.txt is a `feat_map` file. A `feat_map` file should reside in
