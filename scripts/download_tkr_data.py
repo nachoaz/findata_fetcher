@@ -31,7 +31,10 @@ def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
         filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tkr, piece))
         stat_pre = "\t- Writing {}".format(filepath)
 
-        download_and_report_outcome(url, filepath, logpath, stat_pre, overwrite)
+        if not os.path.isfile(filepath) or overwrite:
+            download_and_report_outcome(url, filepath, logpath, stat_pre)
+        else:
+            print("\t- {} already exists.".format(filepath))
 
 
 def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
@@ -45,7 +48,10 @@ def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
 
     stat_pre = "\t- Writing {}".format(filepath)
 
-    download_and_report_outcome(url, filepath, logpath, stat_pre, overwrite)
+    if not os.path.isfile(filepath) or overwrite:
+        download_and_report_outcome(url, filepath, logpath, stat_pre)
+    else:
+        print("\t- {} already exists.".format(filepath))
 
 
 def main(clist_pofix, quandl_key, overwrite):
