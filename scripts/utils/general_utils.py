@@ -33,98 +33,6 @@ def rm_file_if_exists(filepath):
         os.remove(filepath)
 
 
-def srow_df_poorly_formatted(df):
-    """
-    Returns true if stockrow df poorly formatted (missing data and/or has 
-    mislabeled columns.
-    """
-    has_unnamed_columns = any(['Unnamed' in str(col) for col in df.columns])
-    theres_gaps = False
-
-    if not has_unnamed_columns:
-        try:
-            years = [col.year for col in df.columns]
-        except:
-            years = [int(col.split('-')[0]) for col in df.columns]
-
-        counts = Counter(years)
-        is_first_year = lambda year : year == sorted(set(years))[0]
-        is_last_year = lambda year : year == sorted(set(years))[-1]
-        theres_gaps = sum([1 if count != 4 \
-                               and not (is_first_year(year) \
-                               or is_last_year(year)) \
-                             else 0 for year, count in counts.items()]) >= 1
-
-    return has_unnamed_columns or theres_gaps 
-
-
-def normalize_coldates(df):
-    """
-    Converts columns of df to be such that they're the end-of-quarter date
-    that they're closest to.
-    """
-    def get_closest_quarter(target):
-        """From https://goo.gl/TzLV2w"""
-        # candidate list, nicely enough none of these 
-        # are in February, so the month lengths are fixed
-        candidates = [
-            datetime.date(target.year - 1, 12, 31),
-            datetime.date(target.year, 3, 31),
-            datetime.date(target.year, 6, 30),
-            datetime.date(target.year, 9, 30),
-            datetime.date(target.year, 12, 31),
-        ]
-        # take the minimum according to the absolute distance to
-        # the target date.
-        return min(candidates, key=lambda d: abs(target - d))
-
-    if all([isinstance(col, pd._libs.tslib.Timestamp) for col in df.columns]):
-        pass
-    elif all([isinstance(col, datetime.date) for col in df.columns]):
-        df.columns = [pd.Timestamp(col) for col in df.columns]
-    elif all([isinstance(col, str) for col in df.columns]):
-        df.columns = [pd.Timestamp(datetime.date(*map(int, col.split('-')))) \
-                      for col in df.columns]
-    else:
-        raise Exception("Unable to normalize coldates.")
-
-    df.columns = list(map(get_closest_quarter, 
-                          [col.date() for col in df.columns]))
-
-def get_stockrow_df(sr_filepath):
-    "returns excel file as pandas df, with YYYY-QX as cols"
-    df = pd.read_excel(sr_filepath)
-
-    # make sure column dates are normalized
-    normalize_coldates(df)
-
-    # make sure df is not poorly formatted
-    assert not srow_df_poorly_formatted(df), \
-           "df at {} is poorly formatted.".format(sr_filepath)
-
-
-    # make sure df's columns go from more recent to less recent
-    if df.columns[0] < df.columns[-1]:
-        df = df.loc[:, df.columns[::-1]]
-
-    # get columns in year-quarter format
-    def get_q_range(year):
-        if is_first_year(year):
-            q_range = range(4, 4-counts[year], -1)
-        else:
-            q_range = range(counts[year], 0, -1)
-        return q_range
-
-    new_cols = [str(year) + '-Q' + str(qrtr_num)
-                for year in sorted(set(years), reverse=True)
-                for qrtr_num in get_q_range(year)]
-    df.columns = new_cols[:df.shape[1]]
-
-    # ensure df's columns go from less recent to most recent
-    df = df.loc[:, df.columns[::-1]]
-    return df
-
-
 def report_and_register_error(stat_pre, e, logpath):
     print(stat_pre + ": FAILED")
     print('\t\t* ' + str(e))
@@ -148,6 +56,93 @@ def get_tkrs_from_clist(clist):
         tkrs = list()
 
     return sorted(tkrs)
+
+
+def srow_df_poorly_formatted(df):
+    """
+    Returns true if stockrow df poorly formatted (missing data and/or has
+    mislabeled columns.
+    """
+    has_unnamed_columns = any(['Unnamed' in str(col) for col in df.columns])
+    theres_gaps = False
+
+    if not has_unnamed_columns:
+        try:
+            years = [col.year for col in df.columns]
+        except:
+            years = [int(col.split('-')[0]) for col in df.columns]
+
+        counts = Counter(years)
+        is_first_year = lambda year : year == sorted(set(years))[0]
+        is_last_year = lambda year : year == sorted(set(years))[-1]
+        theres_gaps = sum([1 if count != 4 \
+                               and not (is_first_year(year) \
+                               or is_last_year(year)) \
+                             else 0 for year, count in counts.items()]) >= 1
+
+    return has_unnamed_columns or theres_gaps
+
+
+def normalize_coldates(df):
+    """
+    Converts columns of df to be such that they're the end-of-quarter date
+    that they're closest to.
+    """
+    def get_closest_quarter(target):
+        """From https://goo.gl/TzLV2w"""
+        # candidate list, nicely enough none of these
+        # are in February, so the month lengths are fixed
+        candidates = [
+            datetime.date(target.year - 1, 12, 31),
+            datetime.date(target.year, 3, 31),
+            datetime.date(target.year, 6, 30),
+            datetime.date(target.year, 9, 30),
+            datetime.date(target.year, 12, 31),
+        ]
+        # take the minimum according to the absolute distance to
+        # the target date.
+        return min(candidates, key=lambda d: abs(target - d))
+
+    if all([isinstance(col, pd._libs.tslib.Timestamp) for col in df.columns]):
+        pass
+    elif all([isinstance(col, datetime.date) for col in df.columns]):
+        df.columns = [pd.Timestamp(col) for col in df.columns]
+    elif all([isinstance(col, str) for col in df.columns]):
+        df.columns = [pd.Timestamp(datetime.date(*map(int, col.split('-')))) \
+                      for col in df.columns]
+    else:
+        raise Exception("Unable to normalize coldates.")
+
+    df.columns = list(map(get_closest_quarter,
+                          [col.date() for col in df.columns]))
+
+
+def get_stockrow_df(sr_filepath):
+    "returns excel file as pandas df, with YYYY-QX as cols"
+    df = pd.read_excel(sr_filepath)
+
+    # make sure column dates are normalized
+    normalize_coldates(df)
+
+    # make sure df is not poorly formatted
+    assert not srow_df_poorly_formatted(df), \
+           "df at {} is poorly formatted.".format(sr_filepath)
+
+    # make sure df's columns go from more recent to less recent
+    if df.columns[0] < df.columns[-1]:
+        df = df.loc[:, df.columns[::-1]]
+
+    # get columns in year-quarter format
+    def get_quarter_from_date(date):
+        return pd.Timestamp(date).quarter
+
+    new_cols = [str(col.year) + '-Q' + str(get_quarter_from_date(col))
+                for col in df.columns]
+    df.columns = new_cols
+
+    # ensure df's columns go from less recent to most recent
+    df = df.loc[:, df.columns[::-1]]
+    return df
 
 
 def get_year_endmonth_from_qrtr(qrtr):

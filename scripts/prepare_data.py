@@ -7,6 +7,7 @@ import pandas as pd
 
 from utils.general_utils import get_tkrs_from_clist, \
                                 report_and_register_error, \
+                                rm_file_if_exists, \
                                 mkdir_if_not_exists, \
                                 LOGS_DIR, CDATA_DIR
 from utils.prepare_data_utils import get_tkr_df
@@ -14,10 +15,10 @@ from utils.prepare_data_utils import get_tkr_df
 
 def main(clist_pofix, feat_map, lag_months):
 
-    dat_dir = os.path.join(os.path.dirname(CDATA_DIR), 'dat_files')
+    dat_dir = os.path.join(os.path.dirname(CDATA_DIR), "dat_files")
     mkdir_if_not_exists(dat_dir)
-    dat_filepath = os.path.join(dat_dir, '{}_{}_{}.dat'.format(clist_pofix,
-        feat_map.strip('.txt'), lag_months))
+    dat_filepath = os.path.join(dat_dir, "{}_{}_{}.dat".format(clist_pofix,
+        feat_map.strip(".txt"), lag_months))
 
     tkr_dfs = dict()
 
@@ -26,8 +27,7 @@ def main(clist_pofix, feat_map, lag_months):
         tkrs = get_tkrs_from_clist(clist)
 
         logpath = os.path.join(LOGS_DIR, "prepare_data_log_" + clist)
-        if os.path.exists(logpath):
-            os.remove(logpath)
+        rm_file_if_exists(logpath)
 
         if tkrs:
             print("\nAppending data for {}...".format(mkt))

@@ -8,6 +8,16 @@ from utils.general_utils import mkdir_if_not_exists
 
 
 def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
+    """
+    Writes .csv file containing the time series of adjusted close prices at the
+    end of every day (for all available days), as provided by Quandl.
+
+    (So bascially it builds TKR_adj_cp.csv by taking TKR_quandl.csv and keeping
+    only 'Date' and 'Adj. Close' columns.)
+
+    Returns contents of this .csv file as a Pandas DataFrame if it can be built.
+    Otherwise returns None.
+    """
     stat_pre = "\t- Writing {}".format(adj_cppath)
     try:
         df = pd.read_csv(quandlpath)
@@ -28,9 +38,20 @@ def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
 
 def get_prices_df(adj_cp_df, periodicity='monthly'):
     """
-    Returns df with price at end of business period (for all available business
-    dates). For example: to get df with price at the business-end-date of every
-    month, specify `periodicity='monthly'`.
+    Returns Pandas DataFrame with price at end of business period (for all
+    available buisiness dates). For example: to get df with price at the
+    business-end-date of every month, specify `periodicity='monthly'`.
+
+    Args:
+        adj_cp_df: Pandas DataFrame with columns 'date' and 'price' housing a
+            date and its corresponding adjusted close price.
+        periodicity: Specifies the periodicity that you want your price_df to
+            have (every month, every week, every day, etc.). Currently only
+            supports 'monthly'.
+
+    Returns:
+        prices_df: Pandas DataFrame with price at end of business period (for
+            all available business dates).
     """
     prices_df = adj_cp_df.set_index('date')
     prices_df.index = pd.to_datetime(prices_df.index)
@@ -42,8 +63,20 @@ def get_prices_df(adj_cp_df, periodicity='monthly'):
 
 
 def get_p_ch_pcts_df(adj_cp_df):
-    "Returns p_ch_pcts_df for given adj_cp_df."
-    prices_df = get_prices_df(adj_cp_df)
+    """
+    Returns p_ch_pcts_df for given adj_cp_df.
+
+    Args:
+        adj_cp_df: Pandas DataFrame with columns 'date' and 'price' housing teh
+        date and its corresponding adjusted close price.
+
+    Returns:
+        p_ch_pcts_df: Pandas DataFrame with columns 'date', 'price',
+        'pct_ch_one', 'pct_ch_three', 'pct_ch_six', 'pct_ch_nine', with the
+        'pct_ch_' columns housing the percent change over one, three, six, and
+        nine periods (currently only 'monthly' periodicity is implemented). 
+    """
+    prices_df = get_prices_df(adj_cp_df, periodicity='monthly')
 
     for col, periods in [
             ('pct_ch_one', 1),
