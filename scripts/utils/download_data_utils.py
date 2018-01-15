@@ -32,5 +32,5 @@ def download_and_report_outcome(url, filepath, logpath, stat_pre):
     try:
         download_file_from_url(url, filepath)
         print(stat_pre + ": SUCCESSFUL")
-    except HTTPRepsonseNotOkException as e:
+    except HTTPResponseNotOkException as e:
         report_and_register_error(stat_pre, e, logpath)
