@@ -2,11 +2,10 @@ srfile|srfile_feat|mdfile_feat|version
 income|Revenues|saleq|ttm
 income|Cost of Revenue|cogsq|ttm
 income|Selling, General and Administrative Expense|xsgaq|ttm
-income|EBIT|ebit|ttm
 income|Operating Income|oiadpq|ttm
 income|Net Income|niq|ttm
 balance|Cash and Equivalents|cheq|mrq
-balance|Trade and Non-Trade Receivables|rect|mrq
+balance|Trade and Non-Trade Receivables|rectq|mrq
 balance|Inventory|invtq|mrq
 balance|Investments Current|acoq|mrq
 balance|Property, Plant & Equipment Net|ppentq|mrq

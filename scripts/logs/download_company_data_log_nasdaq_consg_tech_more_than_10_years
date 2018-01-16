@@ -1,0 +1,202 @@
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ABTL/srow_data/ABTL_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ABTL/srow_data/ABTL_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ABTL/srow_data/ABTL_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ABTL/srow_data/ABTL_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ABTL/srow_data/ABTL_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ABTL/quandl_data/ABTL_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ACTA/quandl_data/ACTA_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ALOT/quandl_data/ALOT_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ALSK/quandl_data/ALSK_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/AWRE/quandl_data/AWRE_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/AXTI/quandl_data/AXTI_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BDE/srow_data/BDE_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BDE/srow_data/BDE_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BDE/srow_data/BDE_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BDE/srow_data/BDE_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BDE/srow_data/BDE_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BELFA/quandl_data/BELFA_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRCD/srow_data/BRCD_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRCD/srow_data/BRCD_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRCD/srow_data/BRCD_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRCD/srow_data/BRCD_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRCD/srow_data/BRCD_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRID/quandl_data/BRID_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CENT/quandl_data/CENT_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CHSCP/quandl_data/CHSCP_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CYBE/quandl_data/CYBE_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/DWCH/quandl_data/DWCH_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/EMKR/quandl_data/EMKR_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ESND/quandl_data/ESND_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/GUID/srow_data/GUID_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/GUID/srow_data/GUID_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/GUID/srow_data/GUID_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/GUID/srow_data/GUID_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/GUID/srow_data/GUID_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/IAC/quandl_data/IAC_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/INSG/quandl_data/INSG_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/INVA/quandl_data/INVA_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ITI/quandl_data/ITI_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/KBAL/quandl_data/KBAL_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MATR/quandl_data/MATR_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MEET/quandl_data/MEET_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MGPI/quandl_data/MGPI_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MOCO/srow_data/MOCO_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MOCO/srow_data/MOCO_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MOCO/srow_data/MOCO_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MOCO/srow_data/MOCO_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MOCO/srow_data/MOCO_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MOCO/quandl_data/MOCO_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/MVIS/quandl_data/MVIS_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NCIT/srow_data/NCIT_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NCIT/srow_data/NCIT_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NCIT/srow_data/NCIT_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NCIT/srow_data/NCIT_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NCIT/srow_data/NCIT_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NCIT/quandl_data/NCIT_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NHTC/quandl_data/NHTC_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NUTR/srow_data/NUTR_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NUTR/srow_data/NUTR_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NUTR/srow_data/NUTR_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NUTR/srow_data/NUTR_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/NUTR/srow_data/NUTR_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/ON/quandl_data/ON_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/PTC/quandl_data/PTC_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/PXLW/quandl_data/PXLW_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/RCKY/quandl_data/RCKY_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SCSS/srow_data/SCSS_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SCSS/srow_data/SCSS_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SCSS/srow_data/SCSS_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SCSS/srow_data/SCSS_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SCSS/srow_data/SCSS_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SGC/quandl_data/SGC_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SLP/quandl_data/SLP_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SONS/srow_data/SONS_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SONS/srow_data/SONS_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SONS/srow_data/SONS_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SONS/srow_data/SONS_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SONS/srow_data/SONS_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SPOK/quandl_data/SPOK_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SYUT/srow_data/SYUT_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SYUT/srow_data/SYUT_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SYUT/srow_data/SYUT_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SYUT/srow_data/SYUT_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/SYUT/srow_data/SYUT_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/USAT/quandl_data/USAT_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/UTEK/srow_data/UTEK_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/UTEK/srow_data/UTEK_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/UTEK/srow_data/UTEK_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/UTEK/srow_data/UTEK_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/UTEK/srow_data/UTEK_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/VIAV/quandl_data/VIAV_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/WBMD/srow_data/WBMD_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/WBMD/srow_data/WBMD_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/WBMD/srow_data/WBMD_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/WBMD/srow_data/WBMD_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/WBMD/srow_data/WBMD_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/WEB/quandl_data/WEB_quandl.csv: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/YHOO/srow_data/YHOO_income.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/YHOO/srow_data/YHOO_balance.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/YHOO/srow_data/YHOO_cashflow.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/YHOO/srow_data/YHOO_metrics.xlsx: FAILED
+		* HTTP Status 404: Not Found.
+	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/YHOO/srow_data/YHOO_growth.xlsx: FAILED
+		* HTTP Status 404: Not Found.

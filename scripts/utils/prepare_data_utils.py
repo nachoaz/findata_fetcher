@@ -239,6 +239,14 @@ def get_big_df(tkr_dfs):
                         attr].values[t] = rank_for_tkr / 100
 
     # concatenate everything together
-    big_df = pd.concat(extended_dfs_w_rankings.values(), axis=0)
+    dfs_to_concat = [df.loc[start_end_date[0]:start_end_date[1], :]
+                     for df, start_end_date in
+                     zip(extended_dfs_w_rankings.values(), start_end_dates)]
+    big_df = pd.concat(dfs_to_concat, axis=0)
+
+    # get rid of rows that are all NaNs because of dates
+
+    big_df.index.name = 'date'
+    big_df.reset_index(inplace=True)
 
     return big_df
