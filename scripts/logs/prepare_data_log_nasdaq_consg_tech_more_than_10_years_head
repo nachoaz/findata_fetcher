@@ -1,0 +1,6 @@
+Appending data for BDE (nasdaq)...: FAILED
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BDE/srow_data/BDE_balance.xlsx'
+Appending data for BRID (nasdaq)...: FAILED
+		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/BRID/cp_data/BRID_p_ch_pcts.csv' does not exist
+Appending data for CENT (nasdaq)...: FAILED
+		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CENT/cp_data/CENT_p_ch_pcts.csv' does not exist
