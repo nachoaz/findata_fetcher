@@ -218,13 +218,27 @@ def get_big_df(tkr_dfs):
         ext_dfs[key] = pd.concat([df, dates_df], axis=1).drop('ignore', axis=1)
 
     ### get rankings
-    # create tensor to house extended df values
-    tensor = np.zeros((len(ext_dfs.values()), *list(ext_dfs.values())[0].shape))
-    for i, df in enumerate(ext_dfs.values()): tensor[i] = df.values
+    attrs_to_get_rankings_for = ['perf', 'mom1m', 'mom3m', 'mom6m', 'mom9m']
+    extended_dfs_w_rankings = ext_dfs.copy()
 
-    # get rankings
-
-    ### get everything back to where it should be
-    # restore orginal dates
+    def get_percentile_ranking(arr, val):
+        arr_wo_nans = np.array([v for v in arr if not np.isnan(v)])
+        if np.isnan(val):
+            return np.nan
+        else:
+            return percentileofscore(arr_wo_nans, val)
+        
+    for attr in attrs_to_get_rankings_for:
+        all_tkrs_vals = np.array([df.loc[:, attr].values 
+                                  for df in ext_dfs.values()])
+        for t in range(len(dates)):
+            rankings_for_all_tkrs = [get_percentile_ranking(all_perf[:, t], val)
+                                     for val in all_perf[:, t]]
+            for tkr_num, rank_for_tkr in enumerate(rankings_for_all_tkrs):
+                list(extended_dfs_w_rankings.values())[tkr_num].loc[:,
+                        attr].values[t] = rank_for_tkr / 100
 
     # concatenate everything together
+    big_df = pd.concat(extended_dfs_w_rankings.values(), axis=0)
+
+    return big_df

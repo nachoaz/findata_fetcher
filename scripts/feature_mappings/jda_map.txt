@@ -2,7 +2,7 @@ srfile|srfile_feat|mdfile_feat|version
 income|Revenues|saleq|ttm
 income|Cost of Revenue|cogsq|ttm
 income|Selling, General and Administrative Expense|xsgaq|ttm
-income|Earning Before Interest & Taxes (EBIT)|ebit|ttm
+income|EBIT|ebit|ttm
 income|Operating Income|oiadpq|ttm
 income|Net Income|niq|ttm
 balance|Cash and Equivalents|cheq|mrq
