@@ -10,7 +10,7 @@ from utils.general_utils import get_tkrs_from_clist, \
                                 rm_file_if_exists, \
                                 mkdir_if_not_exists, \
                                 LOGS_DIR, CDATA_DIR
-from utils.prepare_data_utils import get_tkr_df
+from utils.prepare_data_utils import get_tkr_df, get_big_df
 
 
 def main(clist_pofix, feat_map, lag_months):

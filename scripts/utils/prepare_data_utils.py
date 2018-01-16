@@ -221,7 +221,7 @@ def get_big_df(tkr_dfs):
     attrs_to_get_rankings_for = ['perf', 'mom1m', 'mom3m', 'mom6m', 'mom9m']
     extended_dfs_w_rankings = ext_dfs.copy()
 
-    def get_percentile_ranking(arr, val):
+    def get_pctile_rank(arr, val):
         arr_wo_nans = np.array([v for v in arr if not np.isnan(v)])
         if np.isnan(val):
             return np.nan
@@ -232,9 +232,9 @@ def get_big_df(tkr_dfs):
         all_tkrs_vals = np.array([df.loc[:, attr].values 
                                   for df in ext_dfs.values()])
         for t in range(len(dates)):
-            rankings_for_all_tkrs = [get_percentile_ranking(all_perf[:, t], val)
-                                     for val in all_perf[:, t]]
-            for tkr_num, rank_for_tkr in enumerate(rankings_for_all_tkrs):
+            ranks_for_all_tkrs = [get_pctile_rank(all_tkrs_vals[:, t], val)
+                                  for val in all_tkrs_vals[:, t]]
+            for tkr_num, rank_for_tkr in enumerate(ranks_for_all_tkrs):
                 list(extended_dfs_w_rankings.values())[tkr_num].loc[:,
                         attr].values[t] = rank_for_tkr / 100
 
