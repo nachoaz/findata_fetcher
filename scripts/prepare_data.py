@@ -1,4 +1,5 @@
 # prepare_data.py
+"Puts together big_df.csv, to be used in modeling."
 
 import os
 import argparse

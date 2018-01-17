@@ -1,5 +1,5 @@
 # download_tkr_data.py
-"pulls data from stockrow.com and quandl for tkrs for which download is pending"
+"Pulls data from stockrow.com and quandl for tkrs for which download is pending"
 
 import os
 import argparse

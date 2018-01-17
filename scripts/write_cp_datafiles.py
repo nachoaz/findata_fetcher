@@ -1,5 +1,5 @@
 # write_cp_datafiles.py
-'writes company-list-independent data: adj_cp.csv, p_ch_pcts.csv'
+"Writes company-list-independent data: adj_cp.csv, p_ch_pcts.csv"
 
 import os
 import argparse
