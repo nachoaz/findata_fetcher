@@ -50,4 +50,4 @@ the `.dat` file corresponding to your specified `clist`, `feat_map`, and
 >    name, the `_implicit` versions do not.
 
 
-*Note*: You'll need an API key from Quandl. Read [here](goo.gl/gbtxsi).
+*Note*: You'll need an API key from Quandl. Read [here](https://goo.gl/4VccrT).
