@@ -1,366 +1,40 @@
-Appending data for APH (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/APH/cp_data/APH_p_ch_pcts.csv' does not exist
-Appending data for AVX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/AVX/cp_data/AVX_p_ch_pcts.csv' does not exist
-Appending data for AYI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/AYI/cp_data/AYI_p_ch_pcts.csv' does not exist
 Appending data for BFA (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFA/cp_data/BFA_p_ch_pcts.csv' does not exist
 Appending data for BFB (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFB/cp_data/BFB_p_ch_pcts.csv' does not exist
-Appending data for BG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BG/cp_data/BG_p_ch_pcts.csv' does not exist
-Appending data for BHE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BHE/cp_data/BHE_p_ch_pcts.csv' does not exist
-Appending data for BLL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BLL/cp_data/BLL_p_ch_pcts.csv' does not exist
-Appending data for BMI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BMI/cp_data/BMI_p_ch_pcts.csv' does not exist
-Appending data for BMS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BMS/cp_data/BMS_p_ch_pcts.csv' does not exist
-Appending data for BR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BR/cp_data/BR_p_ch_pcts.csv' does not exist
-Appending data for BRC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BRC/cp_data/BRC_p_ch_pcts.csv' does not exist
-Appending data for BWA (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BWA/cp_data/BWA_p_ch_pcts.csv' does not exist
-Appending data for CACI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CACI/cp_data/CACI_p_ch_pcts.csv' does not exist
-Appending data for CAG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CAG/cp_data/CAG_p_ch_pcts.csv' does not exist
 Appending data for CAL (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CAL/cp_data/CAL_p_ch_pcts.csv' does not exist
-Appending data for CBB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CBB/cp_data/CBB_p_ch_pcts.csv' does not exist
 Appending data for CCE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CCE/cp_data/CCE_p_ch_pcts.csv' does not exist
-Appending data for CCI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CCI/cp_data/CCI_p_ch_pcts.csv' does not exist
-Appending data for CCK (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CCK/cp_data/CCK_p_ch_pcts.csv' does not exist
-Appending data for CHD (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CHD/cp_data/CHD_p_ch_pcts.csv' does not exist
-Appending data for CIEN (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CIEN/cp_data/CIEN_p_ch_pcts.csv' does not exist
-Appending data for CL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CL/cp_data/CL_p_ch_pcts.csv' does not exist
-Appending data for CLGX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CLGX/cp_data/CLGX_p_ch_pcts.csv' does not exist
-Appending data for CLX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CLX/cp_data/CLX_p_ch_pcts.csv' does not exist
+		* index 0 is out of bounds for axis 0 with size 0
 Appending data for CMT (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CMT/cp_data/CMT_p_ch_pcts.csv' does not exist
 Appending data for COH (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/COH/cp_data/COH_p_ch_pcts.csv' does not exist
-Appending data for CPB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CPB/cp_data/CPB_p_ch_pcts.csv' does not exist
-Appending data for CRI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CRI/cp_data/CRI_p_ch_pcts.csv' does not exist
-Appending data for CRM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CRM/cp_data/CRM_p_ch_pcts.csv' does not exist
-Appending data for CSL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CSL/cp_data/CSL_p_ch_pcts.csv' does not exist
-Appending data for CTB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CTB/cp_data/CTB_p_ch_pcts.csv' does not exist
-Appending data for CTL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CTL/cp_data/CTL_p_ch_pcts.csv' does not exist
-Appending data for CTS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CTS/cp_data/CTS_p_ch_pcts.csv' does not exist
-Appending data for CUB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/CUB/cp_data/CUB_p_ch_pcts.csv' does not exist
-Appending data for DBD (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DBD/cp_data/DBD_p_ch_pcts.csv' does not exist
-Appending data for DDD (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DDD/cp_data/DDD_p_ch_pcts.csv' does not exist
-Appending data for DECK (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DECK/cp_data/DECK_p_ch_pcts.csv' does not exist
-Appending data for DF (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DF/cp_data/DF_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/COH/srow_data/COH_income.xlsx'
 Appending data for DLA (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DLA/cp_data/DLA_p_ch_pcts.csv' does not exist
-Appending data for DLB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DLB/cp_data/DLB_p_ch_pcts.csv' does not exist
-Appending data for DNB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DNB/cp_data/DNB_p_ch_pcts.csv' does not exist
-Appending data for DST (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/DST/cp_data/DST_p_ch_pcts.csv' does not exist
-Appending data for EBF (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/EBF/cp_data/EBF_p_ch_pcts.csv' does not exist
-Appending data for ECL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ECL/cp_data/ECL_p_ch_pcts.csv' does not exist
-Appending data for EL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/EL/cp_data/EL_p_ch_pcts.csv' does not exist
-Appending data for ELY (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ELY/cp_data/ELY_p_ch_pcts.csv' does not exist
 Appending data for EPC (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/EPC/cp_data/EPC_p_ch_pcts.csv' does not exist
-Appending data for ESE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ESE/cp_data/ESE_p_ch_pcts.csv' does not exist
-Appending data for ETH (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ETH/cp_data/ETH_p_ch_pcts.csv' does not exist
 Appending data for EXAR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/EXAR/cp_data/EXAR_p_ch_pcts.csv' does not exist
-Appending data for F (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/F/cp_data/F_p_ch_pcts.csv' does not exist
-Appending data for FDS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/FDS/cp_data/FDS_p_ch_pcts.csv' does not exist
-Appending data for FICO (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/FICO/cp_data/FICO_p_ch_pcts.csv' does not exist
-Appending data for FIS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/FIS/cp_data/FIS_p_ch_pcts.csv' does not exist
-Appending data for FL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/FL/cp_data/FL_p_ch_pcts.csv' does not exist
-Appending data for FLO (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/FLO/cp_data/FLO_p_ch_pcts.csv' does not exist
-Appending data for GEF (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/GEF/cp_data/GEF_p_ch_pcts.csv' does not exist
-Appending data for GIS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/GIS/cp_data/GIS_p_ch_pcts.csv' does not exist
-Appending data for GLT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/GLT/cp_data/GLT_p_ch_pcts.csv' does not exist
-Appending data for GLW (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/GLW/cp_data/GLW_p_ch_pcts.csv' does not exist
-Appending data for GPK (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/GPK/cp_data/GPK_p_ch_pcts.csv' does not exist
-Appending data for GTT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/GTT/cp_data/GTT_p_ch_pcts.csv' does not exist
-Appending data for HBI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HBI/cp_data/HBI_p_ch_pcts.csv' does not exist
-Appending data for HNI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HNI/cp_data/HNI_p_ch_pcts.csv' does not exist
-Appending data for HOG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HOG/cp_data/HOG_p_ch_pcts.csv' does not exist
-Appending data for HPQ (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HPQ/cp_data/HPQ_p_ch_pcts.csv' does not exist
-Appending data for HRL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HRL/cp_data/HRL_p_ch_pcts.csv' does not exist
-Appending data for HRS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HRS/cp_data/HRS_p_ch_pcts.csv' does not exist
-Appending data for HSY (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/HSY/cp_data/HSY_p_ch_pcts.csv' does not exist
-Appending data for IDT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/IDT/cp_data/IDT_p_ch_pcts.csv' does not exist
-Appending data for INGR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/INGR/cp_data/INGR_p_ch_pcts.csv' does not exist
-Appending data for IP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/IP/cp_data/IP_p_ch_pcts.csv' does not exist
-Appending data for IRM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/IRM/cp_data/IRM_p_ch_pcts.csv' does not exist
-Appending data for IT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/IT/cp_data/IT_p_ch_pcts.csv' does not exist
-Appending data for JBL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/JBL/cp_data/JBL_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/EXAR/srow_data/EXAR_income.xlsx'
 Appending data for JCI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/JCI/cp_data/JCI_p_ch_pcts.csv' does not exist
-Appending data for JNPR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/JNPR/cp_data/JNPR_p_ch_pcts.csv' does not exist
-Appending data for K (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/K/cp_data/K_p_ch_pcts.csv' does not exist
+		* Unable to normalize coldates.
 Appending data for KATE (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/KATE/cp_data/KATE_p_ch_pcts.csv' does not exist
-Appending data for KEM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/KEM/cp_data/KEM_p_ch_pcts.csv' does not exist
-Appending data for KMB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/KMB/cp_data/KMB_p_ch_pcts.csv' does not exist
-Appending data for KNL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/KNL/cp_data/KNL_p_ch_pcts.csv' does not exist
-Appending data for KO (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/KO/cp_data/KO_p_ch_pcts.csv' does not exist
-Appending data for KS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/KS/cp_data/KS_p_ch_pcts.csv' does not exist
-Appending data for LBY (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LBY/cp_data/LBY_p_ch_pcts.csv' does not exist
-Appending data for LDL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LDL/cp_data/LDL_p_ch_pcts.csv' does not exist
-Appending data for LDOS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LDOS/cp_data/LDOS_p_ch_pcts.csv' does not exist
 Appending data for LDR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LDR/cp_data/LDR_p_ch_pcts.csv' does not exist
-Appending data for LEG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LEG/cp_data/LEG_p_ch_pcts.csv' does not exist
-Appending data for LSI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LSI/cp_data/LSI_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LDR/srow_data/LDR_income.xlsx'
 Appending data for LVLT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LVLT/cp_data/LVLT_p_ch_pcts.csv' does not exist
-Appending data for LZB (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LZB/cp_data/LZB_p_ch_pcts.csv' does not exist
-Appending data for MEI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MEI/cp_data/MEI_p_ch_pcts.csv' does not exist
-Appending data for MHK (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MHK/cp_data/MHK_p_ch_pcts.csv' does not exist
-Appending data for MKC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MKC/cp_data/MKC_p_ch_pcts.csv' does not exist
-Appending data for MLR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MLR/cp_data/MLR_p_ch_pcts.csv' does not exist
-Appending data for MO (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MO/cp_data/MO_p_ch_pcts.csv' does not exist
-Appending data for MOD (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MOD/cp_data/MOD_p_ch_pcts.csv' does not exist
-Appending data for MOV (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MOV/cp_data/MOV_p_ch_pcts.csv' does not exist
-Appending data for MPX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MPX/cp_data/MPX_p_ch_pcts.csv' does not exist
-Appending data for MSI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MSI/cp_data/MSI_p_ch_pcts.csv' does not exist
-Appending data for MTOR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MTOR/cp_data/MTOR_p_ch_pcts.csv' does not exist
-Appending data for MYE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/MYE/cp_data/MYE_p_ch_pcts.csv' does not exist
-Appending data for NAV (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NAV/cp_data/NAV_p_ch_pcts.csv' does not exist
-Appending data for NC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NC/cp_data/NC_p_ch_pcts.csv' does not exist
-Appending data for NCR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NCR/cp_data/NCR_p_ch_pcts.csv' does not exist
-Appending data for NKE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NKE/cp_data/NKE_p_ch_pcts.csv' does not exist
-Appending data for NLS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NLS/cp_data/NLS_p_ch_pcts.csv' does not exist
-Appending data for NP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NP/cp_data/NP_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/LVLT/srow_data/LVLT_income.xlsx'
 Appending data for NSR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NSR/cp_data/NSR_p_ch_pcts.csv' does not exist
-Appending data for NUS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NUS/cp_data/NUS_p_ch_pcts.csv' does not exist
-Appending data for NWL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NWL/cp_data/NWL_p_ch_pcts.csv' does not exist
-Appending data for OI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/OI/cp_data/OI_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/NSR/srow_data/NSR_income.xlsx'
 Appending data for OME (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/OME/cp_data/OME_p_ch_pcts.csv' does not exist
-Appending data for ORCL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ORCL/cp_data/ORCL_p_ch_pcts.csv' does not exist
-Appending data for OSK (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/OSK/cp_data/OSK_p_ch_pcts.csv' does not exist
-Appending data for OXM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/OXM/cp_data/OXM_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/OME/srow_data/OME_income.xlsx'
 Appending data for PAR (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PAR/cp_data/PAR_p_ch_pcts.csv' does not exist
-Appending data for PAY (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PAY/cp_data/PAY_p_ch_pcts.csv' does not exist
-Appending data for PBI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PBI/cp_data/PBI_p_ch_pcts.csv' does not exist
-Appending data for PEP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PEP/cp_data/PEP_p_ch_pcts.csv' does not exist
-Appending data for PG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PG/cp_data/PG_p_ch_pcts.csv' does not exist
-Appending data for PII (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PII/cp_data/PII_p_ch_pcts.csv' does not exist
-Appending data for PKE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PKE/cp_data/PKE_p_ch_pcts.csv' does not exist
-Appending data for PKG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PKG/cp_data/PKG_p_ch_pcts.csv' does not exist
-Appending data for PLT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PLT/cp_data/PLT_p_ch_pcts.csv' does not exist
-Appending data for PVH (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/PVH/cp_data/PVH_p_ch_pcts.csv' does not exist
-Appending data for QTM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/QTM/cp_data/QTM_p_ch_pcts.csv' does not exist
 Appending data for RAI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/RAI/cp_data/RAI_p_ch_pcts.csv' does not exist
-Appending data for REV (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/REV/cp_data/REV_p_ch_pcts.csv' does not exist
-Appending data for RHT (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/RHT/cp_data/RHT_p_ch_pcts.csv' does not exist
-Appending data for RL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/RL/cp_data/RL_p_ch_pcts.csv' does not exist
-Appending data for ROG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ROG/cp_data/ROG_p_ch_pcts.csv' does not exist
+		* [Errno 2] No such file or directory: '/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/RAI/srow_data/RAI_income.xlsx'
 Appending data for ROX (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/ROX/cp_data/ROX_p_ch_pcts.csv' does not exist
-Appending data for RTEC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/RTEC/cp_data/RTEC_p_ch_pcts.csv' does not exist
-Appending data for S (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/S/cp_data/S_p_ch_pcts.csv' does not exist
-Appending data for SAM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SAM/cp_data/SAM_p_ch_pcts.csv' does not exist
-Appending data for SCL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SCL/cp_data/SCL_p_ch_pcts.csv' does not exist
-Appending data for SCS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SCS/cp_data/SCS_p_ch_pcts.csv' does not exist
-Appending data for SEE (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SEE/cp_data/SEE_p_ch_pcts.csv' does not exist
-Appending data for SJM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SJM/cp_data/SJM_p_ch_pcts.csv' does not exist
-Appending data for SKX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SKX/cp_data/SKX_p_ch_pcts.csv' does not exist
-Appending data for SMP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SMP/cp_data/SMP_p_ch_pcts.csv' does not exist
-Appending data for SON (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SON/cp_data/SON_p_ch_pcts.csv' does not exist
-Appending data for SPA (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SPA/cp_data/SPA_p_ch_pcts.csv' does not exist
-Appending data for SRI (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SRI/cp_data/SRI_p_ch_pcts.csv' does not exist
 Appending data for STS (nyse)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/STS/cp_data/STS_p_ch_pcts.csv' does not exist
-Appending data for STZ (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/STZ/cp_data/STZ_p_ch_pcts.csv' does not exist
-Appending data for SUP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SUP/cp_data/SUP_p_ch_pcts.csv' does not exist
-Appending data for SWM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SWM/cp_data/SWM_p_ch_pcts.csv' does not exist
-Appending data for SYX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/SYX/cp_data/SYX_p_ch_pcts.csv' does not exist
-Appending data for T (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/T/cp_data/T_p_ch_pcts.csv' does not exist
-Appending data for TAP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TAP/cp_data/TAP_p_ch_pcts.csv' does not exist
-Appending data for TDS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TDS/cp_data/TDS_p_ch_pcts.csv' does not exist
-Appending data for TDY (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TDY/cp_data/TDY_p_ch_pcts.csv' does not exist
-Appending data for TEN (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TEN/cp_data/TEN_p_ch_pcts.csv' does not exist
-Appending data for TER (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TER/cp_data/TER_p_ch_pcts.csv' does not exist
-Appending data for TG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TG/cp_data/TG_p_ch_pcts.csv' does not exist
-Appending data for THO (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/THO/cp_data/THO_p_ch_pcts.csv' does not exist
-Appending data for THS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/THS/cp_data/THS_p_ch_pcts.csv' does not exist
-Appending data for TIS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TIS/cp_data/TIS_p_ch_pcts.csv' does not exist
-Appending data for TPX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TPX/cp_data/TPX_p_ch_pcts.csv' does not exist
-Appending data for TR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TR/cp_data/TR_p_ch_pcts.csv' does not exist
-Appending data for TSN (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TSN/cp_data/TSN_p_ch_pcts.csv' does not exist
-Appending data for TUP (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TUP/cp_data/TUP_p_ch_pcts.csv' does not exist
-Appending data for TYL (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/TYL/cp_data/TYL_p_ch_pcts.csv' does not exist
 Appending data for UAA (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/UAA/cp_data/UAA_p_ch_pcts.csv' does not exist
-Appending data for UIS (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/UIS/cp_data/UIS_p_ch_pcts.csv' does not exist
-Appending data for UNF (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/UNF/cp_data/UNF_p_ch_pcts.csv' does not exist
-Appending data for USM (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/USM/cp_data/USM_p_ch_pcts.csv' does not exist
-Appending data for UVV (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/UVV/cp_data/UVV_p_ch_pcts.csv' does not exist
-Appending data for VFC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/VFC/cp_data/VFC_p_ch_pcts.csv' does not exist
-Appending data for VG (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/VG/cp_data/VG_p_ch_pcts.csv' does not exist
-Appending data for VGR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/VGR/cp_data/VGR_p_ch_pcts.csv' does not exist
-Appending data for VHC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/VHC/cp_data/VHC_p_ch_pcts.csv' does not exist
-Appending data for VSH (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/VSH/cp_data/VSH_p_ch_pcts.csv' does not exist
-Appending data for VZ (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/VZ/cp_data/VZ_p_ch_pcts.csv' does not exist
-Appending data for WGO (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/WGO/cp_data/WGO_p_ch_pcts.csv' does not exist
-Appending data for WHR (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/WHR/cp_data/WHR_p_ch_pcts.csv' does not exist
-Appending data for WNC (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/WNC/cp_data/WNC_p_ch_pcts.csv' does not exist
-Appending data for WWW (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/WWW/cp_data/WWW_p_ch_pcts.csv' does not exist
-Appending data for XRX (nyse)...: FAILED
-		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/XRX/cp_data/XRX_p_ch_pcts.csv' does not exist
+		* index 0 is out of bounds for axis 0 with size 0

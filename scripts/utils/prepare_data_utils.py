@@ -15,16 +15,71 @@ from utils.general_utils import get_year_endmonth_from_qrtr, \
                                 LOGS_DIR, CDATA_DIR
 
 
+### AUXILARY FUNCTIONS TO COMPUTE DERIVED DATA
+def get_mrkcap(mom_df, fund_df):
+    mrkcap = mom_df['price'] \
+             * fund_df['Weighted Average Shares']
+    return mrkcap
+
+
+def get_entval(mom_df, fund_df):
+    entval = fund_df['mrkcap'] \
+             + fund_df['Total Debt'] \
+             - fund_df['Cash and Equivalents']
+    return entval
+
+
+def get_target(mom_df):
+    return 0.5
+
+
+def get_bnd(mom_df):
+    return 0.5
+
+
+def get_perf(mom_df):
+    perf = mom_df['price'].pct_change(12).shift(-12)
+    return perf
+
+
+def get_active(mom_df):
+    return 1
+
+
+def get_month(mom_df):
+    return [int(date[-2:]) for date in mom_df.index]
+
+
+def get_year(mom_df):
+    return [int(date[:4]) for date in mom_df.index]
+
+
+other_fund_cols = (  # colname, colfunct
+    ('mrkcap', get_mrkcap),
+    ('entval', get_entval))
+
+first_mom_cols = (  # colname, colfunct
+    ('target', get_target),
+    ('bnd', get_bnd),
+    ('perf', get_perf))
+
+last_mom_cols = (  # colname, colfunct
+    ('active', get_active),
+    ('month', get_month),
+    ('year', get_year))
+
+
+### FUNCTIONS TO GET DATA AND BUILD DATAFRAMES
 def get_momentum_df(tkr, tkrdir):
     """
     Returns momentum features as a Pandas DataFrame, with momentums as
     ratios (percentage changes in price).
 
     The 'price' column is the price at which one would buy a share of the
-    corresponding stock *at the start* of the specified month (i.e. it's the
+    corresponding stock *at the start* of the corresponding month (i.e. it's the
     price of a share at the end of the previous month).
 
-    Similarly, the 'mom1m' column is the percent change that that stock's share
+    Similarly, the 'mom1m' column is the percent change that the stock's share
     price has undergone in the one-month period leading up to the start of the
     specified month. (So, it's the price of a share at the end of the previous
     month minus the price of at the end of the month before the previous month
@@ -113,23 +168,26 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     return sr_df
 
 
-def get_fundamentals_df(tkr, tkrdir, mom_df, feat_map='jda_map.txt'):
-    "Returns df with mapped excel files as concatenated pandas df."
-    feat_map_df = pd.read_csv('feature_mappings/{}'.format(feat_map), sep='|')
-    mapped_dfs = dict()
+def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
+    """
+    Returns df with mapped excel files as concatenated pandas df.
+    """
+    feat_map_path = os.path.join("feature_mappings", feat_map)
+    feat_map_df = pd.read_csv(feat_map_path, sep='|')
 
+    mapped_dfs = dict()
     for piece in set(feat_map_df.srfile):
         piece_map = feat_map_df[feat_map_df.srfile == piece]
         mapped_dfs[piece] = get_piece_mapped_df(tkr, tkrdir, piece, piece_map)
 
-    f_df = pd.concat(mapped_dfs.values(), axis=1)
+    fund_df = pd.concat(mapped_dfs.values(), axis=1)
 
     # put all ttm feats first, then all mrq, then rest
     l_cols = list()
     m_cols = list()
     r_cols = list()
 
-    for col in f_df.columns:
+    for col in fund_df.columns:
         if '_ttm' in col:
             l_cols.append(col)
         elif '_mrq' in col:
@@ -137,68 +195,91 @@ def get_fundamentals_df(tkr, tkrdir, mom_df, feat_map='jda_map.txt'):
         else:
             r_cols.append(col)
 
-    f_df = f_df.loc[:, l_cols + m_cols + r_cols]
+    fund_df = fund_df.loc[:, l_cols + m_cols + r_cols].copy()
 
-    # get mktcap using mom_df
-    mrkcap = mom_df.loc[f_df.index[0]:,:]['price'] \
-             * f_df['Weighted Average Shares']
-    mom_df['mrkcap'] = mrkcap
+    return fund_df, feat_map_df
 
-    # get entval
-    entval = mom_df.mrkcap \
-            + f_df.loc[:, 'Total Debt'] \
-            - f_df.loc[:, 'Cash and Equivalents']
-    mom_df['entval'] = entval
+
+def get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df):
 
     # drop first 12 rows if these are gonna be mTM
     if 'ttm' in set(feat_map_df.version):
-        f_df = f_df.iloc[12:,:]
-
-    # drop columns us to compute mktcap and entval
-    f_df.drop(['Weighted Average Shares', 'Total Debt', 'Cash and Equivalents'],
-              axis=1, inplace=True)
+        fund_df = fund_df.iloc[12:,:]
 
     # drop excess mom_df dates
-    mom_df = mom_df.loc[f_df.index[0]:, :]
+    mom_df = mom_df.loc[fund_df.index[0]:, :]
 
-    return mom_df, f_df
+    # drop excess fund_df dates
+    fund_df = fund_df.loc[:mom_df.index[-1], :]
 
+    # insert other_fund columns
+    for colname, colfunct in other_fund_cols:
+        fund_df.insert(0, colname, colfunct(mom_df, fund_df))
 
-def attach_other_cols(tkr, mkt, fund_df, mom_df):
-    tkr_df = pd.concat([mom_df.drop('price', axis=1), fund_df], axis=1)
-    tkr_df.index.rename('date', inplace=True)
+    # ensure desired order of mrkcap and entval columns
+    fund_df = fund_df.loc[:, ['mrkcap', 'entval'] + list(fund_df.columns)[2:]]
 
-    tkr_df.insert(0, 'target', 0.5)
+    # insert first_mom_cols columns
+    for colname, colfunct in first_mom_cols:
+        mom_df.insert(0, colname, colfunct(mom_df))
 
-    tkr_df.insert(0, 'bnd', 0.5)  # to be determined later
+    # insert tkr column
+    mom_df.insert(0, 'tic', tkr)
 
-    perf = mom_df.loc[:, 'price'].pct_change(12).shift(-12)
-    tkr_df.insert(0, 'perf', perf)
+    # insert last_mom_cols columns
+    for colname, colfunct in last_mom_cols:
+        mom_df.insert(0, colname, colfunct(mom_df))
 
-    tkr_df.insert(0, 'tic', tkr)
+    # use tkr and mkt to create unique identifier. #TODO: use hashing here?
+    mom_df.insert(0, 'gvkey', '1'+tkr if mkt == 'nasdaq' else '2'+tkr)
 
-    tkr_df.insert(0, 'active', 1)
+    # concatenate dfs
+    concatenated_df =  pd.concat([mom_df, fund_df], axis=1)
 
-    tkr_df.insert(0, 'month', [int(date[-2:]) for date in tkr_df.index])
+    # drop columns used to compute mrkcap and entval
+    concatenated_df.drop(['Weighted Average Shares', 'Total Debt',
+                          'Cash and Equivalents', 'price'], axis=1,
+                         inplace=True)
 
-    tkr_df.insert(0, 'year', [int(date[:4]) for date in tkr_df.index])
-
-    # use tkr and mkt to create unique identifier. #TODO: use hashing here
-    tkr_df.insert(0, 'gvkey', '1'+tkr if mkt == 'nasdaq' else '2'+tkr)
-
-    return tkr_df
+    return concatenated_df
 
 
 def get_tkr_df(tkr, mkt, feat_map='jda_map.txt', lag_months=3):
+    """
+    Gets df with momentum data and (lagged) specified fundamentals.
+
+    Args:
+        tkr: Ticker of company you want data about.
+        mkt: Market of company you want data about.
+        feat_map: Feature map to use. See 'README.md' for more details.
+        lag_months: Specifies how much to lag fundamentals. Answers the
+            question: 'How long should we assume companies take to publish their earnings?'
+
+    Returns:
+        Pandas DataFrame with corresponding momentum data and fundamentals, as would be avaiable at each date.
+    """
     tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
     mom_df = get_momentum_df(tkr, tkrdir)
-    mom_df, fund_df = get_fundamentals_df(tkr, tkrdir, mom_df, feat_map)
-    tkr_df = attach_other_cols(tkr, mkt, fund_df, mom_df)
-    return tkr_df
+    fund_df, feat_map_df = get_fundamentals_df(tkr, tkrdir, feat_map)
+    concat_df = get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df)
+    return concat_df
 
 
-def get_big_df(tkr_dfs):
+def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
+                                                   'mom6m', 'mom9m']):
+    """
+    Constructs big_df from tkr_dfs by percentile-ranking attrs_to_get_rankings_for.
 
+    Args:
+        tkr_dfs: A dictionary with tkr as key, Pandas DataFrame with tkr's data
+            through time as value. Note: all dfs must have the same columns (attributes), but not necessarily the same rows (dates).
+        attrs_to_get_rankings_for: An iterable that specifies what attributes
+            should be percentile-ranked.
+
+    Returns:
+        big_df: A Pandas DataFrame with all tkr dfs concatenated, with the
+            specified attributes percentile-ranked.
+    """
     ### make all dfs of same shape
     # prepare dates
     start_end_dates = [(df.index[0], df.index[-1]) for df in tkr_dfs.values()]
@@ -218,7 +299,6 @@ def get_big_df(tkr_dfs):
         ext_dfs[key] = pd.concat([df, dates_df], axis=1).drop('ignore', axis=1)
 
     ### get rankings
-    attrs_to_get_rankings_for = ['perf', 'mom1m', 'mom3m', 'mom6m', 'mom9m']
     extended_dfs_w_rankings = ext_dfs.copy()
 
     def get_pctile_rank(arr, val):
@@ -227,9 +307,9 @@ def get_big_df(tkr_dfs):
             return np.nan
         else:
             return percentileofscore(arr_wo_nans, val)
-        
+
     for attr in attrs_to_get_rankings_for:
-        all_tkrs_vals = np.array([df.loc[:, attr].values 
+        all_tkrs_vals = np.array([df.loc[:, attr].values
                                   for df in ext_dfs.values()])
         for t in range(len(dates)):
             ranks_for_all_tkrs = [get_pctile_rank(all_tkrs_vals[:, t], val)
@@ -238,14 +318,13 @@ def get_big_df(tkr_dfs):
                 list(extended_dfs_w_rankings.values())[tkr_num].loc[:,
                         attr].values[t] = rank_for_tkr / 100
 
-    # concatenate everything together
+    # get rid of rows that are all NaNs because of dates
     dfs_to_concat = [df.loc[start_end_date[0]:start_end_date[1], :]
                      for df, start_end_date in
                      zip(extended_dfs_w_rankings.values(), start_end_dates)]
+
+    # concatenate everything together and format to return
     big_df = pd.concat(dfs_to_concat, axis=0)
-
-    # get rid of rows that are all NaNs because of dates
-
     big_df.index.name = 'date'
     big_df.reset_index(inplace=True)
 

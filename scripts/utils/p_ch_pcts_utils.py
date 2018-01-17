@@ -32,7 +32,7 @@ def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
         print(status)
         with open(logpath, 'a') as f:
             f.write(status + "\n")
-            
+
     return df_to_write
 
 
@@ -55,7 +55,7 @@ def get_prices_df(adj_cp_df, periodicity='monthly'):
     """
     prices_df = adj_cp_df.set_index('date')
     prices_df.index = pd.to_datetime(prices_df.index)
-    
+
     if periodicity == 'monthly':
         prices_df = prices_df.resample('BM').apply(lambda x: x[-1])
 
@@ -74,7 +74,7 @@ def get_p_ch_pcts_df(adj_cp_df):
         p_ch_pcts_df: Pandas DataFrame with columns 'date', 'price',
         'pct_ch_one', 'pct_ch_three', 'pct_ch_six', 'pct_ch_nine', with the
         'pct_ch_' columns housing the percent change over one, three, six, and
-        nine periods (currently only 'monthly' periodicity is implemented). 
+        nine periods (currently only 'monthly' periodicity is implemented).
     """
     prices_df = get_prices_df(adj_cp_df, periodicity='monthly')
 
@@ -105,6 +105,12 @@ def write_p_ch_pcts_csv(adj_cp_df, p_ch_pctspath, logpath):
         with open(logpath, 'a') as g:
             g.write(status + '\n')
 
+    except KeyError:
+        status = stat_pre + ": FAILED (KeyError -- unable to build prices_df)."
+        print(status)
+        with open(logpath, 'a') as g:
+            g.write(status + '\n')
+
 
 def write_adj_cps_and_p_ch_pcts_csvs(tkr, tkrdir, logpath, overwrite):
     "Writes adj_cp.csv and p_ch_pcts.csv if they don't already exist."
@@ -123,7 +129,7 @@ def write_adj_cps_and_p_ch_pcts_csvs(tkr, tkrdir, logpath, overwrite):
             adj_cp_df = write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath)
         else:
             print("\t- {} already exists.".format(adj_cppath))
-            adj_cp_df = pd.read_csv(adj_cppath, header=0, 
+            adj_cp_df = pd.read_csv(adj_cppath, header=0,
                                     names=['date', 'price'])
     else:
         adj_cp_df = write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath)
