@@ -168,7 +168,7 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     return sr_df
 
 
-def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
+def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt', lag_months=3):
     """
     Returns df with mapped excel files as concatenated pandas df.
     """
@@ -178,7 +178,8 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
     mapped_dfs = dict()
     for piece in set(feat_map_df.srfile):
         piece_map = feat_map_df[feat_map_df.srfile == piece]
-        mapped_dfs[piece] = get_piece_mapped_df(tkr, tkrdir, piece, piece_map)
+        mapped_dfs[piece] = get_piece_mapped_df(tkr, tkrdir, piece, piece_map,
+                                                lag_months)
 
     fund_df = pd.concat(mapped_dfs.values(), axis=1)
 
@@ -200,7 +201,13 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt'):
     return fund_df, feat_map_df
 
 
-def get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df):
+def ensure_not_all_fundamentals_missing(tkr, mkt, fund_df, lag_months=3):
+    assert np.mean(pd.isnull(fund_df).iloc[-lag_months:, :].values) < 0.5, \
+           "Too many fundamentals missing for {} ({})".format(tkr, mkt)
+
+def get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df, lag_months=3):
+    # ensure it's not the case that all data from a fundamental source missing
+    ensure_not_all_fundamentals_missing(tkr, mkt, fund_df, lag_months)
 
     # drop first 12 rows if these are gonna be mTM
     if 'ttm' in set(feat_map_df.version):
@@ -260,8 +267,10 @@ def get_tkr_df(tkr, mkt, feat_map='jda_map.txt', lag_months=3):
     """
     tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
     mom_df = get_momentum_df(tkr, tkrdir)
-    fund_df, feat_map_df = get_fundamentals_df(tkr, tkrdir, feat_map)
-    concat_df = get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df)
+    fund_df, feat_map_df = get_fundamentals_df(tkr, tkrdir, feat_map, 
+                                               lag_months)
+    concat_df = get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df,
+                                    lag_months)
     return concat_df
 
 
@@ -282,7 +291,9 @@ def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
     """
     ### make all dfs of same shape
     # prepare dates
-    start_end_dates = [(df.index[0], df.index[-1]) for df in tkr_dfs.values()]
+    start_end_dates = [(df[~pd.isnull(df.mrkcap)].index[0], 
+                        df[~pd.isnull(df.mrkcap)].index[-1]) 
+                        for df in tkr_dfs.values()]
     start_dates, end_dates = zip(*start_end_dates)
     abs_start = min(start_dates)
     abs_end = max(end_dates)
