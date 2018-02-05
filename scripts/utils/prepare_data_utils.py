@@ -105,7 +105,7 @@ def get_momentum_df(tkr, tkrdir):
 
 def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     """
-    returns mapped excel files pandas df.
+    Returns mapped excel files pandas df.
     NOTE: lag_months allows us to make the statement
     'QX financials won't be avaliable until the start of the month that's
     lag_months after QX ends'
@@ -115,7 +115,7 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
 
     # read stockrow df, mark missing values accordingly
     sr_df = get_stockrow_df(sr_filepath)
-    sr_df.fillna("mSR", inplace=True)  # if missing bc not in .xlsx mark as mSR
+    #sr_df.fillna("mSR", inplace=True)  # if missing bc not in .xlsx mark as mSR
     sr_df.columns = map(get_year_endmonth_from_qrtr, sr_df.columns)
     sr_df = sr_df.transpose()
 
@@ -148,7 +148,7 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
 
         sr_df[feat] = sr_df[feat].rolling(window=window).sum()
         # if missing bc can't roll back mark as mTM (missing trailing months)
-        sr_df.iloc[:window-1, list(sr_df.columns).index(feat)] = 'mTM'
+        #sr_df.iloc[:window-1, list(sr_df.columns).index(feat)] = 'mTM'
         sr_df = sr_df.rename(index=str, columns={feat: feat + '_' + version
                                         if 'implicit' not in version else feat})
 
@@ -267,11 +267,23 @@ def get_tkr_df(tkr, mkt, feat_map='jda_map.txt', lag_months=3):
     """
     tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
     mom_df = get_momentum_df(tkr, tkrdir)
-    fund_df, feat_map_df = get_fundamentals_df(tkr, tkrdir, feat_map, 
+    fund_df, feat_map_df = get_fundamentals_df(tkr, tkrdir, feat_map,
                                                lag_months)
     concat_df = get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df,
                                     lag_months)
-    return concat_df
+    tkr_df = concat_df.fillna(method='ffill')
+    return tkr_df
+
+
+def get_imputed_df(df, strategy='median'):
+    if strategy == 'median':
+        imputed_df = df.fillna(df.median().fillna(0))
+    elif strategy == 'mean':
+        imputed_df = df.fillna(df.mean().fillna(0))
+    else:
+        raise Exception("Not implemented yet!")
+
+    return imputed_df
 
 
 def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
@@ -291,8 +303,8 @@ def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
     """
     ### make all dfs of same shape
     # prepare dates
-    start_end_dates = [(df[~pd.isnull(df.mrkcap)].index[0], 
-                        df[~pd.isnull(df.mrkcap)].index[-1]) 
+    start_end_dates = [(df[~pd.isnull(df.mrkcap)].index[0],
+                        df[~pd.isnull(df.mrkcap)].index[-1])
                         for df in tkr_dfs.values()]
     start_dates, end_dates = zip(*start_end_dates)
     abs_start = min(start_dates)
@@ -333,6 +345,13 @@ def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
     dfs_to_concat = [df.loc[start_end_date[0]:start_end_date[1], :]
                      for df, start_end_date in
                      zip(extended_dfs_w_rankings.values(), start_end_dates)]
+
+    # impute missing values
+    ixs_of_dfs_to_impute = [i for i, df in enumerate(dfs_to_concat) \
+                            if np.any(pd.isnull(df.iloc[:, -22:]))]
+
+    for i in ixs_of_dfs_to_impute:
+        dfs_to_concat[i] = get_imputed_df(dfs_to_concat[i])
 
     # concatenate everything together and format to return
     big_df = pd.concat(dfs_to_concat, axis=0)
