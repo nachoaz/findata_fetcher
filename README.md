@@ -5,6 +5,12 @@ Downloads all available fundamentals and price data for tickers specified in
 company list text files; these should be prefixed by market and postfixed by
 `clist_pofix` (which provides details on how this set of stocks were screened).
 
+## Setup
+We suggest that you create a virtual environment to house the necessary versions
+of the software you'll need to use findata_fetcher. Once you've done that and
+you've activated that environment, you can install the required versions onto
+that environment by doing `pip install -r requirements.txt`.
+
 ## Usage
 First create the `clist` files (which will reside inside `data/company_lists`),
 corresponding to the list of companies you want to consider. Standing inside the
