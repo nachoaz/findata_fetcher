@@ -11,11 +11,10 @@ import pandas as pd
 import urllib.request
 import datetime
 
-CUR = os.path.abspath('.')
-PROJ_DIR = '/'.join(CUR.split('/')[:CUR.split('/').index('findata_fetcher')+1])
-LOGS_DIR = PROJ_DIR + '/scripts/logs'
-TICLIST_DIR = PROJ_DIR + '/data/ticker-lists'
-TICDATA_DIR = PROJ_DIR + '/data/ticker-data'
+FINDATA_FETCHER_ROOT = os.environ['FINDATA_FETCHER_ROOT']
+LOGS_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'misc', 'logs')
+TICLIST_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'data', 'ticker-lists')
+TICDATA_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'data', 'ticker-data')
 
 
 def listdir_nohidden(path):
@@ -33,29 +32,27 @@ def rm_file_if_exists(filepath):
         os.remove(filepath)
 
 
-def report_and_register_error(stat_pre, e, logpath):
-    print(stat_pre + ": FAILED")
+def report_and_register_error(status, e, logpath):
+    print(status + ": FAILED")
     print('\t\t* ' + str(e))
     with open(logpath, 'a') as f:
-        f.write(stat_pre + ": FAILED\n")
+        f.write(status + ": FAILED\n")
         f.write('\t\t* ' + str(e) + '\n')
 
 
-def get_tkrs_from_clist(clist):
-    "Returns contents of clist.csv as a sorted list"
-    clist_filepath = os.path.join(CLIST_DIR, "{}.csv".format(clist))
+def get_tic_data_from_ticlist(ticlist):
+    "Returns contents of ticlist.csv as a list of_tuples"
+    ticlist_filepath = os.path.join(TICLIST_DIR, "{}.dat".format(ticlist))
+    tic_data = list()
+    
+    if os.path.isfile(ticlist_filepath):
+        with open(ticlist_filepath, 'r') as f:
+            reader = csv.reader(f, delimiter=' ')
+            tic_data = list(reader)
 
-    if os.path.isfile(clist_filepath):
-        with open(clist_filepath, 'r') as f:
-            reader = csv.reader(f)
-            tkrs = list(reader)
+    tic_data = [tuple(data_list) for data_list in tic_data[1:]]
 
-        tkrs = [a_list[0] for a_list in tkrs]
-
-    else:
-        tkrs = list()
-
-    return sorted(tkrs)
+    return tic_data
 
 
 def srow_df_poorly_formatted(df):
