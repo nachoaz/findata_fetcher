@@ -24,6 +24,8 @@ Appending data for CENT (nasdaq)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CENT/cp_data/CENT_p_ch_pcts.csv' does not exist
 Appending data for CHSCP (nasdaq)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CHSCP/cp_data/CHSCP_p_ch_pcts.csv' does not exist
+Appending data for CTSH (nasdaq)...: FAILED
+		* Too many fundamentals missing for CTSH (nasdaq)
 Appending data for CYBE (nasdaq)...: FAILED
 		* File b'/Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nasdaq/CYBE/cp_data/CYBE_p_ch_pcts.csv' does not exist
 Appending data for DMRC (nasdaq)...: FAILED

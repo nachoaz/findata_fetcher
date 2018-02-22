@@ -14,8 +14,8 @@ import datetime
 CUR = os.path.abspath('.')
 PROJ_DIR = '/'.join(CUR.split('/')[:CUR.split('/').index('findata_fetcher')+1])
 LOGS_DIR = PROJ_DIR + '/scripts/logs'
-CLIST_DIR = PROJ_DIR + '/data/company_lists'
-CDATA_DIR = PROJ_DIR + '/data/company_data'
+TICLIST_DIR = PROJ_DIR + '/data/ticker-lists'
+TICDATA_DIR = PROJ_DIR + '/data/ticker-data'
 
 
 def listdir_nohidden(path):

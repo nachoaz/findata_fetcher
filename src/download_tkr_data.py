@@ -7,10 +7,7 @@ import argparse
 from utils.general_utils import get_tkrs_from_clist, \
                                 rm_file_if_exists, \
                                 mkdir_if_not_exists, \
-                                LOGS_DIR, CDATA_DIR
-
-from utils.download_data_utils import download_and_report_outcome
-
+                                LOGS_DIR, TICDATA_DIR
 
 def download_tkr_srow_data(tkr, tkrdir, logpath, overwrite):
     "Downloads data from srow tkr (in .xlsx format), if not already present."
@@ -56,12 +53,12 @@ def download_tkr_quandl_csv(tkr, tkrdir, logpath, overwrite, quandl_key):
 
 def main(clist_pofix, quandl_key, overwrite):
     """
-    Downloads fundamentals as excel files from stockrow, daily trading data as a
-    .csv from quandl, for tkrs listed in the specified clists. (Each clist is
-    derived from the clist_pofix, and corresponds to different markets.)
+    Downloads fundamentals as excel files from stockrow and daily trading data
+    as a .csv from quandl, for tkrs listed in the specified clists. (Each clist
+    is derived from the clist_pofix, and corresponds to different markets.)
     """
     mkdir_if_not_exists(LOGS_DIR)
-    mkdir_if_not_exists(CDATA_DIR)
+    mkdir_if_not_exists(TICDATA_DIR)
 
     for mkt in ['nasdaq', 'nyse']:
         # get list of tkrs to fetch data for
@@ -94,8 +91,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "clist_pofix",
-        help="specifies which postfix to use to determine company lists")
+        "ticlist",
+        help="specifies which list of tickers to download data for")
 
     parser.add_argument(
         "quandl_key",
@@ -107,4 +104,4 @@ if __name__ == '__main__':
         action="store_true")
 
     args = parser.parse_args()
-    main(args.clist_pofix, args.quandl_key, args.overwrite)
+    main(args.ticlist, args.quandl_key, args.overwrite)
