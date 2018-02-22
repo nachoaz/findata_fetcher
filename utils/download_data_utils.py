@@ -7,7 +7,7 @@ import time
 import requests
 
 from utils.general_utils import report_and_register_error
-from errors.my_errors import HTTPResponseNotOkException
+from misc.errors.my_errors import HTTPResponseNotOkException
 
 
 def download_file_from_url(url, filepath):
