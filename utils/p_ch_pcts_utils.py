@@ -12,7 +12,7 @@ def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
     Writes .csv file containing the time series of adjusted close prices at the
     end of every day (for all available days), as provided by Quandl.
 
-    (So bascially it builds TKR_adj_cp.csv by taking TKR_quandl.csv and keeping
+    (So bascially it builds TIC-adj-cp.csv by taking TIC-quandl.csv and keeping
     only 'Date' and 'Adj. Close' columns.)
 
     Returns contents of this .csv file as a Pandas DataFrame if it can be built.
@@ -21,14 +21,14 @@ def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
     stat_pre = "\t- Writing {}".format(adj_cppath)
     try:
         df = pd.read_csv(quandlpath)
-        df_to_write = df.loc[:, ['Date', 'Adj. Close']]
+        df_to_write = df[['Date', 'Adj. Close']]
         df_to_write.columns = ['date', 'price']
         df_to_write.to_csv(adj_cppath, index=False)
         print(stat_pre + ': SUCCESSFUL')
 
     except FileNotFoundError:
         df_to_write = None
-        status = stat_pre + ": FAILED (file not found)."
+        status = stat_pre + ": FAILED (quandl file not found)."
         print(status)
         with open(logpath, 'a') as f:
             f.write(status + "\n")
@@ -91,7 +91,7 @@ def get_p_ch_pcts_df(adj_cp_df):
 
 
 def write_p_ch_pcts_csv(adj_cp_df, p_ch_pctspath, logpath):
-    "Writes tkr_p_ch_pcts.csv for tkr."
+    "Writes tic_p_ch_pcts.csv for tic."
     stat_pre = '\t- Writing {}'.format(p_ch_pctspath)
 
     try:
@@ -112,33 +112,26 @@ def write_p_ch_pcts_csv(adj_cp_df, p_ch_pctspath, logpath):
             g.write(status + '\n')
 
 
-def write_adj_cps_and_p_ch_pcts_csvs(tkr, tkrdir, logpath, overwrite):
+def write_adj_cps_and_p_ch_pcts_csvs(tic, ticdir, logpath, overwrite):
     "Writes adj_cp.csv and p_ch_pcts.csv if they don't already exist."
     # create cp_data directory if not already existent
-    cp_datadir = os.path.join(tkrdir, "cp_data")
+    cp_datadir = os.path.join(ticdir, "cp-data")
     mkdir_if_not_exists(cp_datadir)
 
     # define necessary paths
-    quandlpath = os.path.join(tkrdir, "quandl_data", tkr + "_quandl.csv")
-    adj_cppath = os.path.join(cp_datadir, tkr + "_adj_cp.csv")
-    p_ch_pctspath = os.path.join(cp_datadir, tkr + "_p_ch_pcts.csv")
+    quandlpath = os.path.join(ticdir, "quandl-data", tic + "-quandl.csv")
+    adj_cppath = os.path.join(cp_datadir, tic + "-adj-cp.csv")
+    p_ch_pctspath = os.path.join(cp_datadir, tic + "-p-ch-pcts.csv")
 
     # write adj_cp.csv (if necessary) and get adj_cp_df
-    if os.path.isfile(adj_cppath):
-        if overwrite:
-            adj_cp_df = write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath)
-        else:
-            print("\t- {} already exists.".format(adj_cppath))
-            adj_cp_df = pd.read_csv(adj_cppath, header=0,
-                                    names=['date', 'price'])
+    if os.path.isfile(adj_cppath) and not overwrite:
+        print("\t- {} already exists.".format(adj_cppath))
+        adj_cp_df = pd.read_csv(adj_cppath, header=0, names=['date', 'price'])
     else:
         adj_cp_df = write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath)
 
     # write p_ch_pcts_csv
-    if os.path.isfile(p_ch_pctspath):
-        if overwrite:
-            write_p_ch_pcts_csv(adj_cp_df, p_ch_pctspath, logpath)
-        else:
-            print("\t- {} already exists.".format(p_ch_pctspath))
+    if os.path.isfile(p_ch_pctspath) and not overwrite:
+        print("\t- {} already exists.".format(p_ch_pctspath))
     else:
         write_p_ch_pcts_csv(adj_cp_df, p_ch_pctspath, logpath)

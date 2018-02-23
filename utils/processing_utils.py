@@ -1,4 +1,4 @@
-# prepare_data_utils.py
+# processing_utils.py
 
 import os
 import sys
@@ -12,7 +12,9 @@ from scipy.stats import percentileofscore
 from utils.general_utils import get_year_endmonth_from_qrtr, \
                                 get_dict_from_df_cols, \
                                 get_stockrow_df, \
-                                LOGS_DIR, CDATA_DIR
+                                mkdir_if_not_exists, \
+                                report_and_register_error, \
+                                LOGS_DIR, TICDATA_DIR, FEATMAP_DIR
 
 
 ### AUXILARY FUNCTIONS TO COMPUTE DERIVED DATA
@@ -70,7 +72,7 @@ last_mom_cols = (  # colname, colfunct
 
 
 ### FUNCTIONS TO GET DATA AND BUILD DATAFRAMES
-def get_momentum_df(tkr, tkrdir):
+def get_momentum_df(tic, ticdir, sector):
     """
     Returns momentum features as a Pandas DataFrame, with momentums as
     ratios (percentage changes in price).
@@ -87,7 +89,7 @@ def get_momentum_df(tkr, tkrdir):
 
     The 'mom3m', 'mom6m', and 'mom9m' columns are similarly defined.
     """
-    p_ch_path = os.path.join(tkrdir, "cp_data", "{}_p_ch_pcts.csv".format(tkr))
+    p_ch_path = os.path.join(ticdir, "cp-data", "{}-p-ch-pcts.csv".format(tic))
     pct_df = pd.read_csv(p_ch_path)
     pct_df = pct_df.transpose()
     pct_df.columns = pd.to_datetime(pct_df.loc['date'])
@@ -103,15 +105,15 @@ def get_momentum_df(tkr, tkrdir):
     return df_to_ret
 
 
-def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
+def get_piece_mapped_df(tic, ticdir, piece, piece_map, lag_months=3):
     """
     Returns mapped excel files pandas df.
     NOTE: lag_months allows us to make the statement
     'QX financials won't be avaliable until the start of the month that's
     lag_months after QX ends'
     """
-    srow_dir = os.path.join(tkrdir, 'srow_data')
-    sr_filepath = os.path.join(srow_dir, '{}_{}.xlsx'.format(tkr, piece))
+    srow_dir = os.path.join(ticdir, 'srow-data')
+    sr_filepath = os.path.join(srow_dir, '{}-{}.xlsx'.format(tic, piece))
 
     # read stockrow df, mark missing values accordingly
     sr_df = get_stockrow_df(sr_filepath)
@@ -168,17 +170,17 @@ def get_piece_mapped_df(tkr, tkrdir, piece, piece_map, lag_months=3):
     return sr_df
 
 
-def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt', lag_months=3):
+def get_fundamentals_df(tic, ticdir, feat_map='jda-map', lag_months=3):
     """
     Returns df with mapped excel files as concatenated pandas df.
     """
-    feat_map_path = os.path.join("feature_mappings", feat_map)
+    feat_map_path = os.path.join(FEATMAP_DIR, feat_map + ".txt")
     feat_map_df = pd.read_csv(feat_map_path, sep='|')
 
     mapped_dfs = dict()
     for piece in set(feat_map_df.srfile):
         piece_map = feat_map_df[feat_map_df.srfile == piece]
-        mapped_dfs[piece] = get_piece_mapped_df(tkr, tkrdir, piece, piece_map,
+        mapped_dfs[piece] = get_piece_mapped_df(tic, ticdir, piece, piece_map,
                                                 lag_months)
 
     fund_df = pd.concat(mapped_dfs.values(), axis=1)
@@ -201,13 +203,14 @@ def get_fundamentals_df(tkr, tkrdir, feat_map='jda_map.txt', lag_months=3):
     return fund_df, feat_map_df
 
 
-def ensure_not_all_fundamentals_missing(tkr, mkt, fund_df, lag_months=3):
+def ensure_not_all_fundamentals_missing(tic, mkt, fund_df, lag_months=3):
     assert np.mean(pd.isnull(fund_df).iloc[-lag_months:, :].values) < 0.5, \
-           "Too many fundamentals missing for {} ({})".format(tkr, mkt)
+           "Too many fundamentals missing for {} ({})".format(tic, mkt)
 
-def get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df, lag_months=3):
+
+def get_concatenated_df(tic, mkt, mom_df, fund_df, feat_map_df, lag_months=3):
     # ensure it's not the case that all data from a fundamental source missing
-    ensure_not_all_fundamentals_missing(tkr, mkt, fund_df, lag_months)
+    ensure_not_all_fundamentals_missing(tic, mkt, fund_df, lag_months)
 
     # drop first 12 rows if these are gonna be mTM
     if 'ttm' in set(feat_map_df.version):
@@ -230,15 +233,15 @@ def get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df, lag_months=3):
     for colname, colfunct in first_mom_cols:
         mom_df.insert(0, colname, colfunct(mom_df))
 
-    # insert tkr column
-    mom_df.insert(0, 'tic', tkr)
+    # insert tic column
+    mom_df.insert(0, 'tic', tic)
 
     # insert last_mom_cols columns
     for colname, colfunct in last_mom_cols:
         mom_df.insert(0, colname, colfunct(mom_df))
 
-    # use tkr and mkt to create unique identifier. #TODO: use hashing here?
-    mom_df.insert(0, 'gvkey', '1'+tkr if mkt == 'nasdaq' else '2'+tkr)
+    # use tic and mkt to create unique identifier. #TODO: use hashing here?
+    mom_df.insert(0, 'gvkey', '1'+tic if mkt == 'nasdaq' else '2'+tic)
 
     # concatenate dfs
     concatenated_df =  pd.concat([mom_df, fund_df], axis=1)
@@ -251,61 +254,71 @@ def get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df, lag_months=3):
     return concatenated_df
 
 
-def get_tkr_df(tkr, mkt, feat_map='jda_map.txt', lag_months=3):
+def get_tic_df(tic, mkt, sector, feat_map='jda-map', lag_months=3):
     """
     Gets df with momentum data and (lagged) specified fundamentals.
 
     Args:
-        tkr: Ticker of company you want data about.
-        mkt: Market of company you want data about.
+        tic: Ticker of company you want data for.
+        mkt: Market of company you want data for.
+        sector: Sector of company you want data for.
         feat_map: Feature map to use. See 'README.md' for more details.
         lag_months: Specifies how much to lag fundamentals. Answers the
-            question: 'How long should we assume companies take to publish their earnings?'
+            question: 'How long should we assume companies take to publish their
+            earnings?'
 
     Returns:
-        Pandas DataFrame with corresponding momentum data and fundamentals, as would be avaiable at each date.
+        Pandas DataFrame with corresponding momentum data and fundamentals, as
+        would be avaiable at each date.
     """
-    tkrdir = os.path.join(CDATA_DIR, mkt, tkr)
-    mom_df = get_momentum_df(tkr, tkrdir)
-    fund_df, feat_map_df = get_fundamentals_df(tkr, tkrdir, feat_map,
+    ticdir = os.path.join(TICDATA_DIR, mkt, tic)
+    mom_df = get_momentum_df(tic, ticdir, sector)
+    fund_df, feat_map_df = get_fundamentals_df(tic, ticdir, feat_map,
                                                lag_months)
-    concat_df = get_concatenated_df(tkr, mkt, mom_df, fund_df, feat_map_df,
+    concat_df = get_concatenated_df(tic, mkt, mom_df, fund_df, feat_map_df,
                                     lag_months)
-    tkr_df = concat_df.fillna(method='ffill')
-    return tkr_df
+    tic_df = concat_df.fillna(method='ffill')
+    tic_df.insert(list(tic_df.columns.values).index('tic')+1, 'Sector', sector)
+    return tic_df
 
 
-def get_imputed_df(df, strategy='median'):
-    if strategy == 'median':
-        imputed_df = df.fillna(df.median().fillna(0))
-    elif strategy == 'mean':
-        imputed_df = df.fillna(df.mean().fillna(0))
-    else:
-        raise Exception("Not implemented yet!")
+def write_processed_datafile(tic_tuple, logpath, feat_map='jda-map',
+                             lag_months=3):
+    tic, mkt, sector = tic_tuple
+    status = "Writing processed datafile for {} ({})...".format(tic, mkt)
+    try:
+        proc_dir = os.path.join(TICDATA_DIR, mkt, tic, 'processed-data')
+        mkdir_if_not_exists(proc_dir)
+        proc_filepath = os.path.join(proc_dir, '{}-{}-{}.csv'.format(
+            tic, feat_map, lag_months))
+        tic_df = get_tic_df(tic, mkt, sector, feat_map, lag_months)
+        tic_df.to_csv(proc_filepath, index=True)
+        print(status + ": SUCCESS")
+    except Exception as err:  #TODO: better exception handling here
+        report_and_register_error(status, err, logpath)
 
-    return imputed_df
 
-
-def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
-                                                   'mom6m', 'mom9m']):
+def get_big_df(tic_dfs, attrs_to_rank=['perf', 'mom1m', 'mom3m',
+                                       'mom6m', 'mom9m']):
     """
-    Constructs big_df from tkr_dfs by percentile-ranking attrs_to_get_rankings_for.
+    Constructs big_df from tic_dfs by percentile-ranking attrs_to_rank.
 
     Args:
-        tkr_dfs: A dictionary with tkr as key, Pandas DataFrame with tkr's data
-            through time as value. Note: all dfs must have the same columns (attributes), but not necessarily the same rows (dates).
-        attrs_to_get_rankings_for: An iterable that specifies what attributes
-            should be percentile-ranked.
+        tic_dfs: A dictionary with tic as key, Pandas DataFrame with tic's data
+            through time as value. Note: all dfs must have the same columns
+            (attributes), but not necessarily the same rows (dates).
+            attrs_to_rank: An iterable that specifies what
+            attributes should be percentile-ranked.
 
     Returns:
-        big_df: A Pandas DataFrame with all tkr dfs concatenated, with the
+        big_df: A Pandas DataFrame with all tic dfs concatenated, with the
             specified attributes percentile-ranked.
     """
     ### make all dfs of same shape
     # prepare dates
     start_end_dates = [(df[~pd.isnull(df.mrkcap)].index[0],
                         df[~pd.isnull(df.mrkcap)].index[-1])
-                        for df in tkr_dfs.values()]
+                        for df in tic_dfs.values()]
     start_dates, end_dates = zip(*start_end_dates)
     abs_start = min(start_dates)
     abs_end = max(end_dates)
@@ -318,10 +331,11 @@ def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
 
     # extend dfs
     ext_dfs = dict()
-    for key, df in tkr_dfs.items():
+    for key, df in tic_dfs.items():
+        df.index = df.index.map(str)
         ext_dfs[key] = pd.concat([df, dates_df], axis=1).drop('ignore', axis=1)
 
-    ### get rankings
+    ## get rankings
     extended_dfs_w_rankings = ext_dfs.copy()
 
     def get_pctile_rank(arr, val):
@@ -331,27 +345,23 @@ def get_big_df(tkr_dfs, attrs_to_get_rankings_for=['perf', 'mom1m', 'mom3m',
         else:
             return percentileofscore(arr_wo_nans, val)
 
-    for attr in attrs_to_get_rankings_for:
-        all_tkrs_vals = np.array([df.loc[:, attr].values
+    for attr in attrs_to_rank:
+        all_tics_vals = np.array([df.loc[:, attr].values
                                   for df in ext_dfs.values()])
         for t in range(len(dates)):
-            ranks_for_all_tkrs = [get_pctile_rank(all_tkrs_vals[:, t], val)
-                                  for val in all_tkrs_vals[:, t]]
-            for tkr_num, rank_for_tkr in enumerate(ranks_for_all_tkrs):
-                list(extended_dfs_w_rankings.values())[tkr_num].loc[:,
-                        attr].values[t] = rank_for_tkr / 100
+            ranks_for_all_tics = [get_pctile_rank(all_tics_vals[:, t], val)
+                                  for val in all_tics_vals[:, t]]
+            for tic_num, rank_for_tic in enumerate(ranks_for_all_tics):
+                list(extended_dfs_w_rankings.values())[tic_num].loc[:,
+                        attr].values[t] = rank_for_tic / 100
 
     # get rid of rows that are all NaNs because of dates
-    dfs_to_concat = [df.loc[start_end_date[0]:start_end_date[1], :]
-                     for df, start_end_date in
-                     zip(extended_dfs_w_rankings.values(), start_end_dates)]
-
-    # impute missing values
-    ixs_of_dfs_to_impute = [i for i, df in enumerate(dfs_to_concat) \
-                            if np.any(pd.isnull(df.iloc[:, -22:]))]
-
-    for i in ixs_of_dfs_to_impute:
-        dfs_to_concat[i] = get_imputed_df(dfs_to_concat[i])
+    dfs_to_concat = list()
+    for df, start_end_date in zip(extended_dfs_w_rankings.values(),
+                                  start_end_dates):
+        df.index = df.index.map(str)
+        dfs_to_concat.append(
+                df.loc[str(start_end_date[0]):str(start_end_date[1]), :])
 
     # concatenate everything together and format to return
     big_df = pd.concat(dfs_to_concat, axis=0)

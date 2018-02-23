@@ -2,8 +2,7 @@
 
 ## Main Idea
 Downloads all available fundamentals and price data for tickers specified in
-company list text files; these should be prefixed by market and postfixed by
-`clist_pofix` (which provides details on how this set of stocks were screened).
+ticker list text files.
 
 ## Setup
 We suggest that you create a virtual environment to house the necessary versions
@@ -12,12 +11,17 @@ you've activated that environment, you can install the required versions onto
 that environment by doing `pip install -r requirements.txt`.
 
 ## Usage
-First create the `clist` files (which will reside inside `data/company_lists`),
+(1) `create-ticlist-file-from-screener-result`
+(2) `download-ticker-data.py`
+(3) `write-cp-datafiles.py`
+(4) `write-processed-datafiles.py`
+(5) `write-datfile.py`
+First create the `ticlist` files (which will reside inside `data/ticker-lists`),
 corresponding to the list of companies you want to consider. Standing inside the
-`scripts` directory, continue by downloading the data using
-`download_tkr_data.py`, then write the corresponding `cp_data` ('close price'
-data) files using `write_cp_datafiles.py`. Finally, run prepare_data.py to write
-the `.dat` file corresponding to your specified `clist`, `feat_map`, and
+`src` directory, continue by downloading the data using
+`download-ticker-data.py`, then write the corresponding `cp-data` ('close price'
+data) files using `write-cp-datafiles.py`. Finally, run prepare-data.py to write
+the `.dat` file corresponding to your specified `ticlist`, `feat_map`, and
 `lag_months`.
 
 
@@ -26,7 +30,8 @@ the `.dat` file corresponding to your specified `clist`, `feat_map`, and
 > Where clist_definer is a file that specifies how to screen to get the list of
 > companies that you want (i.e. sector(s), market cap, years trading publicly,
 > etc.), and clist_pofix specifies what you want the names of your clist_files
-> to be postfixed by.  *Note*: this is yet to be written (need to find a screener with an API that I can talk to) --for now, these are written by hand.
+> to be postfixed by.  *Note*: this is yet to be written (need to find a
+> screener with an API that I can talk to) --for now, these are written by hand.
 
 `python download_tkr_data.py consg_tech_more_than_10_years_head YOUR_API_KEY`
 > Here, `consg_tech_more_than_10_years_head` is a clist_pofix specifying where
