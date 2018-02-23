@@ -14,7 +14,7 @@ from utils.download_data_utils import download_and_report_outcome
 
 def download_tic_srow_data(tic, ticdir, logpath, overwrite):
     "Downloads data from srow tic (in .xlsx format), if not already present."
-    srow_dir = os.path.join(ticdir, 'srow_data')
+    srow_dir = os.path.join(ticdir, 'srow-data')
     mkdir_if_not_exists(srow_dir)
 
     base = "https://stockrow.com/api/companies/{}".format(tic)
@@ -28,7 +28,7 @@ def download_tic_srow_data(tic, ticdir, logpath, overwrite):
 
     for opiece, piece in opiece_to_piece:
         url = base + "/financials.xlsx?dimension=MRQ&section={}".format(opiece)
-        filepath = os.path.join(srow_dir, "{}_{}.xlsx".format(tic, piece))
+        filepath = os.path.join(srow_dir, "{}-{}.xlsx".format(tic, piece))
         status = "\t- Writing {}".format(filepath)
 
         if not os.path.isfile(filepath) or overwrite:
@@ -39,12 +39,12 @@ def download_tic_srow_data(tic, ticdir, logpath, overwrite):
 
 def download_tic_quandl_csv(tic, ticdir, logpath, overwrite, quandl_key):
     "Downloads data from quandl for given tic (in .csv format)."
-    quandl_dir = os.path.join(ticdir, 'quandl_data')
+    quandl_dir = os.path.join(ticdir, 'quandl-data')
     mkdir_if_not_exists(quandl_dir)
 
     base = 'https://www.quandl.com/api/v3/datasets/WIKI'
     url = base + '/{}.csv?api_key={}'.format(tic, quandl_key)
-    filepath = os.path.join(quandl_dir, "{}_quandl.csv".format(tic))
+    filepath = os.path.join(quandl_dir, "{}-quandl.csv".format(tic))
 
     status = "\t- Writing {}".format(filepath)
 
@@ -66,7 +66,7 @@ def main(ticlist, quandl_key, overwrite):
     tic_data = get_tic_data_from_ticlist(ticlist)
 
     # remove logfile
-    logfile_basename = "download_company_data_log_{}".format(ticlist)
+    logfile_basename = "download-company-data-log-{}".format(ticlist)
     logpath = os.path.join(LOGS_DIR, logfile_basename)
     rm_file_if_exists(logpath)
 
@@ -76,7 +76,7 @@ def main(ticlist, quandl_key, overwrite):
     else:
         print("No tickers found.\n")
 
-    for tic, mkt, sector in tic_data:
+    for tic, mkt, _ in tic_data:
         # ensure market directory within TICDATA_DIR exists (to house tic data)
         mkdir_if_not_exists(os.path.join(TICDATA_DIR, mkt))
         ticdir = os.path.join(TICDATA_DIR, mkt, tic)

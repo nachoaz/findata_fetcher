@@ -15,6 +15,7 @@ FINDATA_FETCHER_ROOT = os.environ['FINDATA_FETCHER_ROOT']
 LOGS_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'misc', 'logs')
 TICLIST_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'data', 'ticker-lists')
 TICDATA_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'data', 'ticker-data')
+FEATMAP_DIR = os.path.join(FINDATA_FETCHER_ROOT, 'data', 'feature-mappings')
 
 
 def listdir_nohidden(path):
