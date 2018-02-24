@@ -50,6 +50,7 @@ def main(ticlist, feat_map, lag_months, attrs_to_rank):
 
     big_df = get_big_df(tic_dfs)
     big_df.to_csv(datfilepath, sep=' ', index=False)
+    print("Successfully wrote {}".format(datfilepath))
 
 
 if __name__ == '__main__':

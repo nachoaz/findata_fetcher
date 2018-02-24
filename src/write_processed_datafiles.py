@@ -39,9 +39,8 @@ if __name__ == '__main__':
 
     parser.add_argument(
             "feat_map",
-            help="""specifies which stockrow datapoints to use, what name they
-                    should get, and what form they should be in (ttm or
-                    mrq).""")
+            help="specifies which stockrow datapoints to use, what name they"
+                  " should get, and what form they should be in (ttm or mrq)")
 
     parser.add_argument(
             "-lm", "--lag_months",
