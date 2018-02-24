@@ -1,4 +1,0 @@
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFA/cp_data/BFA_adj_cp.csv: FAILED (file not found).
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFA/cp_data/BFA_p_ch_pcts.csv: FAILED (adj_cp file not found).
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFB/cp_data/BFB_adj_cp.csv: FAILED (file not found).
-	- Writing /Users/nacho/Documents/Professional/Euclidean/findata_fetcher/data/company_data/nyse/BFB/cp_data/BFB_p_ch_pcts.csv: FAILED (adj_cp file not found).
