@@ -62,13 +62,13 @@ def main(ticlist, quandl_key, overwrite):
     mkdir_if_not_exists(LOGS_DIR)
     mkdir_if_not_exists(TICDATA_DIR)
 
-    # get list of tics to fetch data for
-    tic_data = get_tic_data_from_ticlist(ticlist)
-
     # remove logfile
     logfile_basename = "download-company-data-log-{}".format(ticlist)
     logpath = os.path.join(LOGS_DIR, logfile_basename)
     rm_file_if_exists(logpath)
+
+    # get list of tics to fetch data for
+    tic_data = get_tic_data_from_ticlist(ticlist)
 
     # fill that market directory with tic data
     if tic_data:

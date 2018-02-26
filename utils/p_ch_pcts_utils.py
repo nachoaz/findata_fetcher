@@ -4,7 +4,7 @@ import os
 
 import pandas as pd
 
-from utils.general_utils import mkdir_if_not_exists
+from utils.general_utils import mkdir_if_not_exists, TICDATA_DIR
 
 
 def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
@@ -112,8 +112,10 @@ def write_p_ch_pcts_csv(adj_cp_df, p_ch_pctspath, logpath):
             g.write(status + '\n')
 
 
-def write_adj_cps_and_p_ch_pcts_csvs(tic, ticdir, logpath, overwrite):
+def write_adj_cps_and_p_ch_pcts_csvs(tic_tuple, logpath, overwrite):
     "Writes adj_cp.csv and p_ch_pcts.csv if they don't already exist."
+    tic, mkt, _ = tic_tuple
+    ticdir = os.path.join(TICDATA_DIR, mkt, tic)
     # create cp_data directory if not already existent
     cp_datadir = os.path.join(ticdir, "cp-data")
     mkdir_if_not_exists(cp_datadir)
@@ -123,6 +125,7 @@ def write_adj_cps_and_p_ch_pcts_csvs(tic, ticdir, logpath, overwrite):
     adj_cppath = os.path.join(cp_datadir, tic + "-adj-cp.csv")
     p_ch_pctspath = os.path.join(cp_datadir, tic + "-p-ch-pcts.csv")
 
+    print("Writing price datafiles for {} ({})...".format(tic, mkt))
     # write adj_cp.csv (if necessary) and get adj_cp_df
     if os.path.isfile(adj_cppath) and not overwrite:
         print("\t- {} already exists.".format(adj_cppath))

@@ -9,7 +9,7 @@ sys.path.append('../')
 from utils.general_utils import get_tic_data_from_ticlist, \
                                 rm_file_if_exists, \
                                 mkdir_if_not_exists, \
-                                LOGS_DIR, TICDATA_DIR
+                                LOGS_DIR
 from utils.p_ch_pcts_utils import write_adj_cps_and_p_ch_pcts_csvs
 
 
@@ -28,11 +28,7 @@ def main(ticlist, overwrite):
         print("No tickers found.")
 
     for tic, mkt, _ in tic_data:
-        ticdir = os.path.join(TICDATA_DIR, mkt, tic)
-
-        # write cp_datafiles
-        print("Writing datafile for {} ({})...".format(tic, mkt))
-        write_adj_cps_and_p_ch_pcts_csvs(tic, ticdir, logpath, overwrite)
+        write_adj_cps_and_p_ch_pcts_csvs(tic_tuple, logpath, overwrite)
 
 
 if __name__ == '__main__':
