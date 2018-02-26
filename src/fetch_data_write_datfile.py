@@ -59,6 +59,7 @@ def do_fetch_job(tic_tuple, args, logpaths):
 
 def main(args):
     ticlist, feat_map, _, lag_months, overwrite, attr_to_rank = args
+    mkdir_if_not_exists(LOGS_DIR)
     logpaths = get_logpaths(ticlist, feat_map, lag_months)
 
     tic_tuples = get_tic_data_from_ticlist(ticlist)
