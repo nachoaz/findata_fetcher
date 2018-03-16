@@ -12,7 +12,7 @@ from misc.errors.my_errors import HTTPResponseNotOkException
 
 def download_file_from_url(url, filepath):
     """Downloads file at url, saves at filepath."""
-    time.sleep(3)
+    time.sleep(5)
     response = requests.get(url)
     if response.status_code == 200:
         with open(filepath, 'wb') as f:

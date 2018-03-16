@@ -241,7 +241,7 @@ def get_concatenated_df(tic, mkt, mom_df, fund_df, feat_map_df, lag_months=3):
         mom_df.insert(0, colname, colfunct(mom_df))
 
     # use tic and mkt to create unique identifier. #TODO: use hashing here?
-    mom_df.insert(0, 'gvkey', '1'+tic if mkt == 'nasdaq' else '2'+tic)
+    mom_df.insert(0, 'gvkey', '1'+tic if mkt == 'NASDAQ' else '2'+tic)
 
     # concatenate dfs
     concatenated_df =  pd.concat([mom_df, fund_df], axis=1)

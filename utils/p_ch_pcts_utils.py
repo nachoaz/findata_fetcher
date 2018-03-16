@@ -31,6 +31,13 @@ def write_adj_cp_csv_get_df(adj_cppath, quandlpath, logpath):
         status = stat_pre + ": FAILED (quandl file not found)."
         print(status)
         with open(logpath, 'a') as f:
+            f.write(status + "\n")  # TODO: BETTER ERROR HANDLING HERE
+
+    except Exception as e:
+        df_to_write = None
+        status = stat_pre + ": FAILED"
+        print(status)
+        with open(logpath, 'a') as f:
             f.write(status + "\n")
 
     return df_to_write
