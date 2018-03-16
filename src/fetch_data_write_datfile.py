@@ -1,8 +1,8 @@
-# do_everyting.py
+# fetch_data_write_datfile.py
 """
 Takes care of downloading whatever needs to be downloaded, writing cp datafiles,
 writing processed datafiles, and using all of that to build the datfile
-(all of this corresponding to a specific ticlist, feat_map, and
+(all of this corresponding to a specific ticlist and feat_map).
 """
 import os
 import argparse
@@ -119,6 +119,6 @@ if __name__ == '__main__':
 
     parsed_args = parser.parse_args()
     args = (parsed_args.ticlist, parsed_args.feat_map, parsed_args.quandl_key,
-            parsed_args.lag_months, parsed_args.overwrite, 
+            parsed_args.lag_months, parsed_args.overwrite,
             parsed_args.attr_to_rank)
     main(args)
