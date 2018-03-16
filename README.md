@@ -32,8 +32,8 @@ the `src` directory):
 python fetch_data_write_datfile.py open-ticlist.dat jda-map YOURQUANDLAPIKEY
 ```
 
-This will produce a file called `open-ticlist-jda-map-3.dat`, which is --when
-renamed-- is what we use as `open-dataset.dat`.
+This will produce a file called `open-ticlist-jda-map-3.dat` at `data/datfiles`,
+which is --when renamed-- is what we use as `open-dataset.dat`.
 
 *Note*: You'll need an API key from Quandl. Read [here](https://goo.gl/4VccrT).
 
