@@ -298,6 +298,16 @@ def write_processed_datafile(tic_tuple, logpath, feat_map='jda-map',
         report_and_register_error(status, err, logpath)
 
 
+def get_imputed_df(df, strategy='median'):
+    if strategy == 'median':
+        imputed_df = df.fillna(df.median().fillna(0))
+    elif strategy == 'mean':
+        imputed_df = df.fillna(df.mean().fillna(0))
+    else:
+        raise Exception("Not implemented yet!")
+    return imputed_df
+
+
 def get_big_df(tic_dfs, attrs_to_rank=['perf', 'mom1m', 'mom3m',
                                        'mom6m', 'mom9m']):
     """
@@ -362,6 +372,13 @@ def get_big_df(tic_dfs, attrs_to_rank=['perf', 'mom1m', 'mom3m',
         df.index = df.index.map(str)
         dfs_to_concat.append(
                 df.loc[str(start_end_date[0]):str(start_end_date[1]), :])
+
+    # impute missing values
+    ixs_of_dfs_to_impute = [i for i, df in enumerate(dfs_to_concat) \
+                            if np.any(pd.isnull(df.iloc[:, -22:]))]  #TODO: -22?
+
+    for i in ixs_of_dfs_to_impute:
+        dfs_to_concat[i] = get_imputed_df(dfs_to_concat[i])
 
     # concatenate everything together and format to return
     big_df = pd.concat(dfs_to_concat, axis=0)
