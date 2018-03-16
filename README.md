@@ -25,11 +25,15 @@ pip3 install -r requirements.txt
 ```
 
 ## Quickstart Guide
-To create `open-dataset.dat` from `open-ticlist.dat`, simply run:
+To create `open-dataset.dat` from `open-ticlist.dat`, simply run (standing in
+the `src` directory):
 
 ```shell
 python fetch_data_write_datfile.py open-ticlist.dat jda-map YOURQUANDLAPIKEY
 ```
+
+This will produce a file called `open-ticlist-jda-map-3.dat`, which is --when
+renamed-- is what we use as `open-dataset.dat`.
 
 *Note*: You'll need an API key from Quandl. Read [here](https://goo.gl/4VccrT).
 
